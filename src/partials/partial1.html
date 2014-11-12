@@ -1,0 +1,8 @@
+<p>The following is fetched from the /api/me DHIS2 Web Api call at {{dhisAPI}}</p>
+<p>The DHIS API url is found by downloading the manifest.webapp from DHIS2. DHIS2 edits the activites.dhis.href parameter in the manifest file during app installation. </p>
+<p>Your name is: {{me.name}} <button ng-click="refreshMe()">Refresh</button></p>
+<p>Your first org unit is: {{me.organisationUnits[0].name}}</p>
+<p>Name in profile: {{profile.firstName}} {{profile.surName}}</p>
+<p>Edit first name: <input ng-model="profile.firstName" type="text">
+    <button ng-click="saveProfile()">Save profile</button>
+ </p>

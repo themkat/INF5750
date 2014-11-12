@@ -1,0 +1,22 @@
+<p> Map demo using Leaflet (but no DHIS2 API connection):</p>
+<p>
+    Long: <input type="number" ng-model="location.lng">
+    Lat: <input type="number" ng-model="location.lat">
+</p>
+<p>
+    <button ng-click="addMarkers()" type="submit" class="btn btn-success">Add markers</button>
+    <button ng-click="removeMarkers()" type="submit" class="btn btn-success">Remove markers</button>
+    <button ng-click="removeOsmLayer()" type="submit" class="btn btn-success">Show cycle layer</button>
+    <button ng-click="addOsmLayer()" type="submit" class="btn btn-success">Show OSM layer</button>
+    <button ng-click="showGoogleLayers()" type="submit" class="btn btn-success">Show Google layer</button>
+</p>
+
+<p>
+    <leaflet defaults="defaults" center="center" markers="markers" layers="layers" height="480px" width="800px"></leaflet>
+</p>
+
+<p>
+    See <a href="https://github.com/tombatossals/angular-leaflet-directive">this link</a> and <a
+        href="http://tombatossals.github.io/angular-leaflet-directive/#!/">this link</a> for more info on Leaflet in
+    Angular. This code is cut from the examples on those pages.
+</p>
