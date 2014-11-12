@@ -1,16 +1,27 @@
 #!/bin/env bash
 
-CURDIR=$(pwd)
-SRCDIR="./src/"
-PACKAGE="$CURDIR/quiz.zip"
+PROJECT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_DIRECTORY=$(pwd)
+SOURCE_DIRECTORY="$PROJECT_DIRECTORY/src/"
+PACKAGE_PATH="$CURRENT_DIRECTORY/quiz.zip"
 
-cd "$SRCDIR"
+cd "$SOURCE_DIRECTORY"
 
-printf "[ .. ] Cleaning environment"
-rm -f "$PACKAGE"
-printf "\r%s\n" "[ ok ]"
-printf "[ .. ] Building application package %s" "$PACKAGE"
-zip -r "$PACKAGE" ./* > /dev/null 2>&1
-printf "\r%s\n" "[ ok ]"
+# Remove previously generated zip archive.
+if [ -f "$PACKAGE_PATH" ];
+then
+	MESSAGE=$(printf "Removing package %s" "$PACKAGE_PATH")
+	
+	printf "[ .. ] $MESSAGE"
+	rm -f "$PACKAGE_PATH"
+	printf "\r[ ok ] $MESSAGE\n"
+fi
 
-cd "$CURDIR"
+# Build zip archive.
+MESSAGE=$(printf "Building package %s" "$PACKAGE_PATH")
+
+printf "[ .. ] $MESSAGE"
+zip -r "$PACKAGE_PATH" ./* > /dev/null 2>&1
+printf "\r[ ok ] $MESSAGE\n"
+
+cd "$CURRENT_DIRECTORY"
