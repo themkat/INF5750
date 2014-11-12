@@ -1,7 +1,7 @@
 {
     "version":"1.0",
-    "name":"Example Application",
-    "description":"Example application for DHIS2.",
+    "name":"Quiz something",
+    "description":"Some quiz yo!",
     "icons":{
     "16":null,
         "48":"/img/icon-48.png",
@@ -9,7 +9,7 @@
 },
     "developer":{
     "url":"http://dhis2.org/",
-        "name":"Lars Kristian Roland",
+        "name":"InvalidGroupNameException",
         "company":"University of Oslo",
         "email":"lars@roland.bz"
 },
