@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1>Courses</h1>
+    <h1>Overview</h1>
   </div>
   <div class="panel-body">
 
@@ -13,8 +13,17 @@
     <div class="row">
       <div class="col-md-6">
 	<ul>
-	  <li><a href="course1">Course 1</a></li>
-	  <li><a href="course2">Course 2</a></li>
+	<!-- 
+	     TODO: These should not be direct links, but should cause the following
+	     buttons to appear on the right:
+		-Edit
+		-Rename
+		-Answer
+		-Review
+		-Delete
+	  -->
+	  <li><a href="#/qm">Course 1</a></li>
+	  <li><a href="#/qm">Course 2</a></li>
 	</ul>
       </div>
       <div class="col-md-6">
@@ -25,11 +34,18 @@
 	    number of questions: 8
 	    <br>
 	    motivation: Getting shit done.
-
-	    <!-- Buttons for å redigere osv. -->
-	    <!-- Ha en placeholder med at man bør velge et course.
-		 add buttons for rename, edit and delete.
-	      -->
+	    <p>
+		    <div class="btn-group" role="group" aria-label="...">
+			    <button class="btn btn-default" type="button">Edit</button>
+			    <button class="btn btn-default" type="button">Rename</button>
+			    <button class="btn btn-default" type="button">Answer</button>
+			    <button class="btn btn-default" type="button">Review</button>
+			    <button class="btn btn-default" type="button">Delete</button>
+		    </div>
+	    </p>
+	    TODO: Knappene bør "slide" frem under et course når man har trykket på det, og forsvinne hvis man trykker på et annet course.
+	     <!-- Buttons for å redigere osv. -->
+	    <!-- Ha en placeholder med at man bør velge et course -->
 	  </div>
 	</div>
       </div>
