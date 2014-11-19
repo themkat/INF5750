@@ -14,7 +14,14 @@
 */
 
 angular.module('myApp.controllers', []).
-    controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
+	controller('CoursesCtrl', ['$scope',
+		function ($scope) {
+
+		$scope.changeView = function(view) {
+			$location.path(view);
+		};
+	}])
+    .controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
         function ($scope, MeService, ProfileService) {
 
         $scope.dhisAPI = dhisAPI;
