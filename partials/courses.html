@@ -1,57 +1,51 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1>Overview</h1>
-  </div>
-  <div class="panel-body">
-
-    <!-- 
-	 TODO:
-	 - klikk på tekster for å få opp redigeringsinfo.
-	 - legg til sidemeny hvor man kan se info om course man har trykket på
-      -->
-
-    <div class="row">
-      <div class="col-md-6">
-	<ul>
-	<!-- 
-	     TODO: These should not be direct links, but should cause the following
-	     buttons to appear on the right:
-		-Edit
-		-Rename
-		-Answer
-		-Review
-		-Delete
-	  -->
-	  <li>Course 1</li>
-	  <li>Course 2</li>
-	</ul>
-      </div>
-      <div class="col-md-6">
-	<div class="panel panel-primary">
-	  <div class="panel-body">
-	    info about the course selected.
-	    <br>
-	    number of questions: 8
-	    <br>
-	    motivation: Getting shit done.
-	    <p>
-		    <div class="btn-group" role="group" aria-label="...">
-			    <button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
-			    <button class="btn btn-default" type="button">Rename</button>
-			    <button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
-			    <button class="btn btn-default" type="button">Review</button>
-			    <button class="btn btn-default" type="button">Delete</button>
-		    </div>
-	    </p>
-	    TODO: Knappene bør "slide" frem under et course når man har trykket på det, og forsvinne hvis man trykker på et annet course.
-	     <!-- Buttons for å redigere osv. -->
-	    <!-- Ha en placeholder med at man bør velge et course -->
-	  </div>
+	<div class="panel-heading">
+		<h1>Overview</h1>
 	</div>
-      </div>
-    </div>
-    
-
-    <button class="btn btn-lg btn-primary" type="button">Add course</button>
-  </div>
+	<div class="panel-body">
+		<!-- 
+		TODO:
+		- klikk på tekster for å få opp redigeringsinfo.
+		- legg til sidemeny hvor man kan se info om course man har trykket på
+		-->
+		<div class="row">
+			<div class="col-md-6">
+				<ul>
+					<!-- 
+					TODO: These should not be direct links, but should cause the following
+					buttons to appear on the right:
+					-Edit
+					-Rename
+					-Answer
+					-Review
+					-Delete
+					-->
+					<li>Course 1</li>
+					<li>Course 2</li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<p>info about the course selected.</p>
+						<p>number of questions: 8</p>
+						<p>motivation: Getting shit done.</p>
+						<p>
+							<div class="btn-group" role="group" aria-label="...">
+								<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
+								<button class="btn btn-default" type="button">Rename</button>
+								<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+								<button class="btn btn-default" type="button">Review</button>
+								<button class="btn btn-default" type="button">Delete</button>
+							</div>
+						</p>
+						<p>TODO: Knappene bør "slide" frem under et course når man har trykket på det, og forsvinne hvis man trykker på et annet course.</p>
+						<!-- Buttons for å redigere osv. -->
+						<!-- Ha en placeholder med at man bør velge et course -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-lg btn-primary" type="button">Add course</button>
+	</div>
 </div>
