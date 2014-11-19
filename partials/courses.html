@@ -9,9 +9,10 @@
 		- legg til sidemeny hvor man kan se info om course man har trykket på
 		-->
 		<div class="row">
-			<div class="col-md-6">
-				<ul>
-					<!-- 
+			<div class="col-md-6" id="quiz-list">
+				<button class="btn btn-primary" type="button" ng-show="showListButton" ng-click="makeList()">Show courses</button>
+				<ul id="element">
+				<!--	 
 					TODO: These should not be direct links, but should cause the following
 					buttons to appear on the right:
 					-Edit
@@ -19,10 +20,9 @@
 					-Answer
 					-Review
 					-Delete
+					
 					-->
-					<li>Course 1</li>
-					<li>Course 2</li>
-				</ul>
+				</ul> 
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-primary">
