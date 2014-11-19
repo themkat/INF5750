@@ -31,6 +31,7 @@ angular.module('myApp.controllers', []).
 
 			for (var i = 0; i < numberOfListItems; i++) {
 				var listItem = document.createElement("li");
+				listItem.className = "list-group-item";
 				listItem.innerHTML = courseList[i];
 				listElement.appendChild(listItem);
 			}
