@@ -1,5 +1,6 @@
 #!/bin/env bash
 
+# Check if the "zip" program exists.
 if ! hash zip 2>/dev/null; then
 	printf "\r[ !! ] program zip not found\n"
 	exit 1
