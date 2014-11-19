@@ -1,74 +1,64 @@
 <div class="row">
+	<!-- Valgmeny -->
+	<div class="col-md-4">
+		<!-- Motivation panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Motivation</h3>
+			</div>
+			<div class="panel-body">
+				<textarea class="form-control" placeholder="The motivation of this course..."></textarea>
+				<button class="btn btn-default" type="button">Apply</button>
+				<button class="btn btn-default" type="button">Abort</button>
+			</div>
+		</div>
 
-  <!-- Valgmeny -->
-  <div class="col-md-4">
-    <!-- Motivation panel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-	<h3 class="panel-title">
-	  Motivation
-	</h3>
-      </div>
-      <div class="panel-body">
-	<textarea class="form-control" placeholder="The motivation of this course..."></textarea>
-	<button class="btn btn-default" type="button">Apply</button>
-	<button class="btn btn-default" type="button">Abort</button>
-      </div>
-    </div>
+		<!-- Step by step -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Step by step</h3>
+			</div>
+			<div class="panel-body">
+				<textarea class="form-control" placeholder="1. Step 1...."></textarea>
+				<button class="btn btn-default" type="button">Apply</button>
+				<button class="btn btn-default" type="button">Abort</button>
+			</div>
+		</div>
+	</div>
 
-    <!-- Step by step -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-	<h3 class="panel-title">
-	  Step by step
-	</h3>
-      </div>
-      <div class="panel-body">
-	<textarea class="form-control" placeholder="1. Step 1...."></textarea>
-	<button class="btn btn-default" type="button">Apply</button>
-	<button class="btn btn-default" type="button">Abort</button>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Quiz question editor -->
-  <div class="col-md-8">
-    <select class="form-control">
-      <option>question </option>
-      <option>Test</option>
-    </select>
-    <button class="btn btn-success" type="button">+</button>
-    
-    <form role="form">
-      <h3 class="quiz_header">Test-header</h3>
-      <div class="radio">
-	<label>
-	  <input type="radio" name="quiz_opts" id="quiz_opt1">
-	  <!-- todo: implementér  slik at man trykker på tekst og kan redigere den som tekstfelt -->
-	  <input type="text" class="form-control" placeholder="Write a question">
-	</label>
-      </div>
-      <div class="radio">    
-	<label>
-	  <input type="radio" name="quiz_opts" id="quiz_opt2">
-	  Option 2
-	</label>
-      </div>
-      <div class="radio">
-	<label>
-	  <input type="radio" name="quiz_opts" id="quiz_opt3">
-	  Option 3
-	</label>
-      </div>
-    </form>
-  </div>
+	<!-- Quiz question editor -->
+	<div class="col-md-8">
+		<select class="form-control">
+			<option>Question</option>
+			<option>Test</option>
+		</select>
+		<button class="btn btn-success" type="button">+</button>
+		<form role="form">
+			<h3 class="quiz_header">Test-header</h3>
+			<div class="radio">
+				<label>
+					<input type="radio" name="quiz_opts" id="quiz_opt1">
+					<!-- todo: implementér  slik at man trykker på tekst og kan redigere den som tekstfelt -->
+					<input type="text" class="form-control" placeholder="Write a question">
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="quiz_opts" id="quiz_opt2">Option 2</input>
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="quiz_opts" id="quiz_opt3">Option 3</input>
+				</label>
+			</div>
+		</form>
+	</div>
 </div>
-<button class="btn btn-lg btn-success" type="button">Save quiz</button>
+<button class="btn btn-lg btn-success" type="button">Save</button>
 
-<!-- Note to self: 
+<!-- Note to self:
 bruk localstorage til mellomlagring
-oversett til JSON. 
-send til server. ...? 
+oversett til JSON.
+send til server. ...?
 profit? -->
