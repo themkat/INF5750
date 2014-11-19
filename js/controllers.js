@@ -17,10 +17,30 @@ angular.module('myApp.controllers', []).
 	controller('CoursesCtrl', ['$scope', '$location',
 		function ($scope, $location) {
 
+		var courseList = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
+
+		$scope.showListButton = true;
+
+		$scope.makeList = function() {
+			$scope.showListButton = false;
+
+			var listElement = document.getElementById("element");
+			var numberOfListItems = courseList.length;
+
+			console.log("In function.");
+
+			for (var i = 0; i < numberOfListItems; i++) {
+				var listItem = document.createElement("li");
+				listItem.innerHTML = courseList[i];
+				listElement.appendChild(listItem);
+			}
+		};
+
 		$scope.changeView = function(view) {
 			console.log("Changing view.\n");
 			$location.path(view);
 		};
+
 	}])
     .controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
         function ($scope, MeService, ProfileService) {
