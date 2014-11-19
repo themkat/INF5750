@@ -1,78 +1,77 @@
 <!doctype html>
 <html lang="en" ng-app="myApp">
-<head>
-    <meta charset="utf-8">
-    <title>DHIS2 Quiz</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/leaflet.css" />
-    <link rel="shortcut icon" href="../../favicon.ico" />
-
-</head>
-<script>
-    /* this gets the web api url from the manifest file and makes it available as a Javascript variable */
-    var xhReq = new XMLHttpRequest();
-    xhReq.open("GET", "manifest.webapp", false);
-    xhReq.send(null);
-    var serverResponse = JSON.parse(xhReq.responseText);
-    var dhisAPI = serverResponse.activities.dhis.href;
-</script>
-<body>
-
-<!-- Static navbar -->
-<div class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-collapse">
-                <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/courses">DHIS2 Quiz</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-		<li><a href="#/courses">Overview</a></li>
-		<li><a href="#/quiz">Quiz</a></li>
-	<!--	<li><a href="#/qm">Holy Quiz Maker, Batman!</a></li> -->
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
-
-<div class="container" ng-view></div>
-
-<div class="container">This app is based on the Angular Seed project and uses AngularJS. </div>
-<div class="container">Authored by Marie Katrine Ekeberg, Martin Røed Jacobsen, and
-Vebjørn Ring Sjølyst for the INF5750 Open Source Development course. </div>
-
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
--->
-
-
-<script src="lib/angular/angular.js"></script>
-<script src="lib/angular/angular-route.js"></script>
-<script src="lib/angular/angular-resource.js"></script>
-<script src="js/leaflet.js"></script>
-<script src="js/angular-leaflet-directive.js"></script>
-
-<!--<script type="text/javascript" src="http://cdn.jsdelivr.net/lodash/2.1.0/lodash.compat.min.js"></script>-->
-<!--<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/latest/restangular.js"></script>-->
-<!--<script type="text/javascript" src="js/restangular.js"></script>-->
-<!--<script type="text/javascript" src="js/restangular.min.js"></script>-->
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
-
-<script src="js/jquery-1.10.1.min.js"></script>
-<script src="js/jquery-migrate-1.2.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
-<script src="js/Google.js"></script>
-
-</body>
+	<head>
+		<meta charset="utf-8">
+		<title>DHIS2 Quiz</title>
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<link rel="shortcut icon" href="../../favicon.ico" />
+	</head>
+	
+	<script>
+		/* This gets the WebAPI url from the manifest file and makes it available as a JavaScript variable. */
+		var xhReq = new XMLHttpRequest();
+		xhReq.open("GET", "manifest.webapp", false);
+		xhReq.send(null);
+		var serverResponse = JSON.parse(xhReq.responseText);
+		var dhisAPI = serverResponse.activities.dhis.href;
+	</script>
+	
+	<body>
+	
+	<!-- Static navbar -->
+	<div class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/courses">DHIS2 Quiz</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#/courses">Overview</a></li>
+					<li><a href="#/quiz">Quiz</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+	
+	<div class="container" ng-view></div>
+	
+	<div class="container">
+		This app is based on the Angular Seed project and uses AngularJS.
+	</div>
+	<div class="container">
+		Authored by Marie Katrine Ekeberg, Martin Røed Jacobsen, and Vebjørn Ring Sjølyst for the INF5750 Open Source Development course.
+	</div>
+	
+	<!-- In production use:
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	-->
+	
+	<script src="lib/angular/angular.js"></script>
+	<script src="lib/angular/angular-route.js"></script>
+	<script src="lib/angular/angular-resource.js"></script>
+	<script src="js/leaflet.js"></script>
+	<script src="js/angular-leaflet-directive.js"></script>
+	<!--<script type="text/javascript" src="http://cdn.jsdelivr.net/lodash/2.1.0/lodash.compat.min.js"></script>-->
+	<!--<script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/latest/restangular.js"></script>-->
+	<!--<script type="text/javascript" src="js/restangular.js"></script>-->
+	<!--<script type="text/javascript" src="js/restangular.min.js"></script>-->
+	<script src="js/app.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/filters.js"></script>
+	<script src="js/directives.js"></script>
+	<script src="js/jquery-1.10.1.min.js"></script>
+	<script src="js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+	<script src="js/Google.js"></script>
+	
+	</body>
 </html>
