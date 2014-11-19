@@ -14,10 +14,11 @@
 */
 
 angular.module('myApp.controllers', []).
-	controller('CoursesCtrl', ['$scope',
-		function ($scope) {
+	controller('CoursesCtrl', ['$scope', '$location',
+		function ($scope, $location) {
 
 		$scope.changeView = function(view) {
+			console.log("Changing view.\n");
 			$location.path(view);
 		};
 	}])

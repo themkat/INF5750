@@ -22,8 +22,8 @@
 		-Review
 		-Delete
 	  -->
-	  <li><a href="#/qm">Course 1</a></li>
-	  <li><a href="#/qm">Course 2</a></li>
+	  <li>Course 1</li>
+	  <li>Course 2</li>
 	</ul>
       </div>
       <div class="col-md-6">
@@ -36,9 +36,9 @@
 	    motivation: Getting shit done.
 	    <p>
 		    <div class="btn-group" role="group" aria-label="...">
-			    <button class="btn btn-default" type="button">Edit</button>
+			    <button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
 			    <button class="btn btn-default" type="button">Rename</button>
-			    <button class="btn btn-default" type="button">Answer</button>
+			    <button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
 			    <button class="btn btn-default" type="button">Review</button>
 			    <button class="btn btn-default" type="button">Delete</button>
 		    </div>
