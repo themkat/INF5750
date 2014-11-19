@@ -1,1 +1,29 @@
-{"version":"1.0","name":"Quiz something","launch_path":"index.html","installs_allowed_from":["*"],"default_locale":"en","description":"Some quiz yo!","icons":{"16":null,"48":"/img/icon-48.png","128":"/img/icon.png"},"developer":{"url":"http://dhis2.org/","name":"InvalidGroupNameException","company":"University of Oslo","email":"lars@roland.bz"},"activities":{"dhis":{"href":"http://inf5750-10.uio.no"}},"folderName":null,"baseUrl":null,"launchUrl":null}
+{
+	"version":"1.0",
+	"name":"Quiz something",
+	"launch_path":"index.html",
+	"installs_allowed_from":[
+		"*"
+	],
+	"default_locale":"en",
+	"description":"Some quiz yo!",
+	"icons":{
+		"16":null,
+		"48":"/img/icon-48.png",
+		"128":"/img/icon.png"
+	},
+	"developer":{
+		"url":"http://dhis2.org/",
+		"name":"InvalidGroupNameException",
+		"company":"University of Oslo",
+		"email":"lars@roland.bz"
+	},
+	"activities":{
+		"dhis":{
+			"href":"http://inf5750-10.uio.no"
+		}
+	},
+	"folderName":null,
+	"baseUrl":null,
+	"launchUrl":null
+}
