@@ -1,51 +1,96 @@
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		<h1>Overview</h1>
-	</div>
-	<div class="panel-body">
-		<!-- 
-		TODO:
-		- klikk på tekster for å få opp redigeringsinfo.
-		- legg til sidemeny hvor man kan se info om course man har trykket på
-		-->
-		<div class="row">
-			<div class="col-md-6" id="quiz-list">
-				<button class="btn btn-primary" type="button" ng-show="showListButton" ng-click="makeList()">Show courses</button>
-				<ul id="element" class="list-group">
-				<!--	 
-					TODO: These should not be direct links, but should cause the following
-					buttons to appear on the right:
-					-Edit
-					-Rename
-					-Answer
-					-Review
-					-Delete
-					
-					-->
-				</ul> 
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-primary">
-					<div class="panel-body">
-						<p>info about the course selected.</p>
-						<p>number of questions: 8</p>
-						<p>motivation: Getting shit done.</p>
-						<p>
-							<div class="btn-group" role="group" aria-label="...">
-								<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
-								<button class="btn btn-default" type="button">Rename</button>
-								<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
-								<button class="btn btn-default" type="button">Review</button>
-								<button class="btn btn-default" type="button">Delete</button>
-							</div>
-						</p>
-						<p>TODO: Knappene bør "slide" frem under et course når man har trykket på det, og forsvinne hvis man trykker på et annet course.</p>
-						<!-- Buttons for å redigere osv. -->
-						<!-- Ha en placeholder med at man bør velge et course -->
-					</div>
-				</div>
+<div class="page-header">
+	<h1>Administration <small>manage courses</small></h1>
+</div>
+<!-- 
+TODO:
+- klikk på tekster for å få opp redigeringsinfo.
+- legg til sidemeny hvor man kan se info om course man har trykket på
+-->
+<div class="row">
+	<div class="col-sm-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">Statistical information</div>
+			<div class="panel-body">
+				<p>This is where we'll show you the number of available courses and their completion ratio.</p>
+				<hr />
+				<p>Just take a look at this nice progress bar.</p>
+				<p>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+							60%
+						</div>
+					</div>				
+				</p>
 			</div>
 		</div>
-		<button class="btn btn-lg btn-primary" type="button">Add course</button>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Management information</div>
+			<div class="panel-body">
+				<p>
+					This section is available to you because you are currently signed in with course administration privileges.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-header">
+	<h1>Courses <small>overview</small></h1>
+</div>
+<div class="row">
+	<div class="col-sm-8" id="quiz-list">
+		<div class="alert alert-info" role="alert">You are currently signed in as a course administrator.</div>
+		<div class="list-group">
+			<a ng-repeat="course in courses.courses | orderBy : 'name'" 
+				href="#" 
+				class="list-group-item"
+				ng-click="itemClicked($index)">
+				
+				<h4 class="list-group-item-heading">{{course.name}}</h4>
+				<p class="list-group-item-text">{{course.description}}</p>
+			</a>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Course information</div>
+			<div class="panel-body">
+				<p><b>Pretending to know the system</b> <span class="label label-warning">Difficult</span></p>
+				<hr />
+				<p>This course does not correspond to one of the bogus courses in the list, simply because I currently don't know how to mark a course as active when it is clicked.</p>
+				<hr />
+				<p>You need at least 15 of 20 correct answers to pass this test.</p>
+				<hr />
+				<p>
+					<div class="text-center">
+						<div class="btn-group" role="group" aria-label="...">
+							<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
+							<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+							<button class="btn btn-default" type="button">Review</button>
+							<button class="btn btn-default" type="button">Delete</button>
+						</div>
+					</div>
+				</p>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Administration</div>
+			<div class="panel-body">
+				<p>These are the actions that you, high priest of this system, may perform on a course.</p>
+				<hr />
+				<p>
+					<div class="text-center">
+						<div class="btn-group" role="group" aria-label="...">
+							<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
+							<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+							<button class="btn btn-default" type="button">Review</button>
+							<button class="btn btn-default" type="button">Delete</button>
+						</div>
+					</div>
+				</p>
+			</div>
+		</div>
+
 	</div>
 </div>
