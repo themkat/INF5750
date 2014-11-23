@@ -17,29 +17,70 @@ angular.module('myApp.controllers', []).
 	controller('CoursesCtrl', ['$scope', '$location',
 		function ($scope, $location) {
 
-		var courseList = ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
-
-		$scope.showListButton = true;
-
-		$scope.makeList = function() {
-			$scope.showListButton = false;
-
-			var listElement = document.getElementById("element");
-			var numberOfListItems = courseList.length;
-
-			console.log("In function.");
-
-			for (var i = 0; i < numberOfListItems; i++) {
-				var listItem = document.createElement("li");
-				listItem.className = "list-group-item";
-				listItem.innerHTML = courseList[i];
-				listElement.appendChild(listItem);
-			}
-		};
-
-		$scope.changeView = function(view) {
-			console.log("Changing view.\n");
-			$location.path(view);
+		/* DUMMY COURSES */
+		$scope.courses  = {
+			"courses":[
+				{
+					"id":"Rp268JB6Ne4",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"TAB Science: One tab equals eight characters",
+					"lastUpdated":"2014-03-02T21:16:00.548+0000",
+					"code":"OU_651071",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
+					"description":"Failing this test will permanently revoke your access to the DHIS2 system."
+				},
+				{
+					"id":"Rp268JB6Ne4",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"Adonkia CHP",
+					"lastUpdated":"2014-03-02T21:16:00.548+0000",
+					"code":"OU_651071",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
+					"description":"This text makes no sense."
+				},
+				{
+					"id":"cDw53Ej8rju",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"Afro Arab Clinic",
+					"lastUpdated":"2014-03-02T21:16:07.293+0000",
+					"code":"OU_278371",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					"description":"This whole thing is just ridiculous."
+				},
+				{
+					"id":"cDw53Ej8rju",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"Martin's course of violence",
+					"lastUpdated":"2014-03-02T21:16:07.293+0000",
+					"code":"OU_278371",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					"description":"Learn how to tackle challenges by shooting them in the face."
+				},
+				{
+					"id":"cDw53Ej8rju",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"Oh hey there JavaScript",
+					"lastUpdated":"2014-03-02T21:16:07.293+0000",
+					"code":"OU_278371",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					"description":"Seems like you have to cooperate after all."
+				},
+				{
+					"id":"cDw53Ej8rju",
+					"created":"2012-02-17T14:54:39.987+0000",
+					"name":"Stupidity and horrific coding practices",
+					"lastUpdated":"2014-03-02T21:16:07.293+0000",
+					"code":"OU_278371",
+					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					"description":"A basic introduction to religious techno-babble."
+				}
+			]
+		}
+		
+		$scope.selectedCourseIndex = 0;
+		
+		$scope.itemClicked = function ($index) {
+			$scope.selectedCourseIndex = $index;
 		};
 
 	}])
