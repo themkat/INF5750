@@ -104,15 +104,27 @@
 	    <h1>Quiz editor <small>add and edit questions</small></h1>
 	  </div>
 	</div>
-	<div class="modal-body">
-	  <!-- skal skrives om til accordions i angular-ui
-	       
-	       TODO: legg til en pil ned, så det blir mer intuitivt hva man skal gjøre for å få det fram. < tåkete tekst
-	    -->
-	  
+	<div class="modal-body" id="quiz-modal">
+	  <!-- Accordion-testing som ikke ga ønsket resultat-->
+	  <!--
+	  <div ng-controller="MyCtrl1">
+	    <accordion close-others="true">
+	      <accordion-group is-open="true">
+		<accordion-heading>
+		  Lelelelelelele
+		</accordion-heading>
+		some content... <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+	      </accordion-group>
+	      <accordtion-group heading="lelelel">
+	      </accordtion-group>
+	    </accordion>
+	  </div> -->
+
+	  <!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
+
 	  <!-- Motivation panel -->
 	  <div class="panel panel-default">
-	    <div class="panel-heading" data-toggle="collapse" data-target="#motivation">
+	    <div class="panel-heading" data-toggle="collapse" data-target="#motivation" data-parent="#quiz-modal">
 	      <h3 class="panel-title">Motivation</h3>
 	    </div>
 	    <div class="panel-body collapse" id="motivation">
@@ -129,7 +141,7 @@
 	  
 	  <!-- Step by step -->
 	  <div class="panel panel-default">
-	    <div class="panel-heading" data-toggle="collapse" data-target="#stepbystep">
+	    <div class="panel-heading" data-toggle="collapse" data-target="#stepbystep" data-parent="#quiz-modal">
 	      <h3 class="panel-title">Step by step</h3>
 	    </div>
 	    <div class="panel-body collapse" id="stepbystep">
@@ -143,8 +155,8 @@
 	    </div>
 	  </div>
 	  
-	  <div class="panel panel-default">
-	    <div class="panel-body">
+	  <div class="panel panel-default" data-target="#quiz_edit" data-parent="#quiz-modal">
+	    <div class="panel-body collapse" id="quiz_edit">
 	      <div class="input-group">
 		<select class="form-control input-lg" id="quiz_questions">
 		  <option>Rand McRand</option>
@@ -153,10 +165,9 @@
 		   <button class="btn btn-sm btn-success" type="button">+</button>
 		</span>
 	      </div>
-	    </div>
-
-	    <form role="form">
-	      <h3 class="quiz_header">Who implemented</h3>
+	      
+	      <form role="form">
+		<h3 class="quiz_header">Who implemented</h3>
 		<p>
 		  <div class="input-group">
 		    <span class="input-group-addon">
@@ -165,23 +176,24 @@
 		    <input type="text" class="form-control">
 		  </div>
 		</p>
-	      <p>
-		<div class="input-group">
-		  <span class="input-group-addon">
-		    <input type="radio" name="qr">
-		  </span>
-		  <input type="text" class="form-control">
-		</div>
-	      </p>
-	      <p>
-		<div class="input-group">
-		  <span class="input-group-addon">
-		    <input type="radio" name="qr">
-		  </span>
-		  <input type="text" class="form-control">
-		</div>
-	      </p>
-	    </form>
+		<p>
+		  <div class="input-group">
+		    <span class="input-group-addon">
+		      <input type="radio" name="qr">
+		    </span>
+		    <input type="text" class="form-control">
+		  </div>
+		</p>
+		<p>
+		  <div class="input-group">
+		    <span class="input-group-addon">
+		      <input type="radio" name="qr">
+		    </span>
+		    <input type="text" class="form-control">
+		  </div>
+		</p>
+	      </form>
+	    </div>
 	  </div>
 	  <!-- end of copy-paste -->
 	</div>
