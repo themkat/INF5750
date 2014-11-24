@@ -67,7 +67,7 @@ TODO:
 						<div class="btn-group" role="group" aria-label="...">
 							<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
 							<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
-							<button class="btn btn-default" type="button">Review</button>
+							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Review</button>
 							<button class="btn btn-default" type="button">Delete</button>
 						</div>
 					</div>
@@ -93,5 +93,117 @@ TODO:
 			</div>
 		</div>
 
+	</div>
+
+	<div class="modal fade" id="quiz_modal" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<div class="page-header">
+		  <h1>Quiz editor <small>add and edit questions</small></h1>
+		</div>
+	      </div>
+	      <div class="modal-body">
+		<!-- Body fra quizmaker.html. litt experimental. W.I.P :P
+		     litt rar indentering i denne fila desverre. Emacs hjemme er bedre konfigurert..
+
+		     TODO: legg til en pil ned, så det blir mer intuitivt hva man skal gjøre for å få det fram. < tåkete tekst
+		  -->
+
+		<!-- Motivation panel -->
+		<div class="panel panel-default">
+		  <div class="panel-heading" data-toggle="collapse" data-target="#motivation">
+		    <h3 class="panel-title">Motivation</h3>
+		  </div>
+		  <div class="panel-body collapse" id="motivation">
+		    <textarea class="form-control" placeholder="The motivation of this course..."></textarea>
+		    <p>
+		      <div class="btn-group pull-right" role="group" aria-label="...">
+			<button class="btn btn-default" type="button">Discard</button>
+			<button class="btn btn-primary" type="button">Apply</button>
+		      </div>
+		    </p>
+		  </div>
+		</div>		
+
+
+		<!-- Step by step -->
+		<div class="panel panel-default">
+		  <div class="panel-heading" data-toggle="collapse" data-target="#stepbystep">
+		    <h3 class="panel-title">Step by step</h3>
+		  </div>
+		  <div class="panel-body collapse" id="stepbystep">
+		    <textarea class="form-control" placeholder="1. Step 1...."></textarea>
+		    <p>
+		      <div class="btn-group pull-right" role="group" aria-label="...">
+			<button class="btn btn-default" type="button">Discard</button>
+			<button class="btn btn-primary" type="button">Apply</button>
+		      </div>
+		    </p>
+		  </div>
+		</div>
+	      </div>
+
+
+	      <div class="container">
+		<select class="form-control">
+		  <option>Question</option>
+		  <option>Test</option>
+		</select>
+		<button class="btn btn-success" type="button">+</button>
+	      </div>
+	      
+	      <div class="row">
+		<!-- Valgmeny -->
+		<div class="col-md-4">
+		    
+		  
+		  <!-- Quiz question editor -->
+		  <div class="col-md-8">
+		    
+		    
+		    <form role="form">
+		      <h3 class="quiz_header">Test-header</h3>
+		      
+		      <p>
+			<div class="input-group">
+			  <span class="input-group-addon">
+			    <input type="radio" name="qr">
+			  </span>
+			  <input type="text" class="form-control">
+			</div>
+		      </p>
+		      <p>
+			<div class="input-group">
+			  <span class="input-group-addon">
+			    <input type="radio" name="qr">
+			  </span>
+			  <input type="text" class="form-control">
+			</div>
+		      </p>
+		      <p>
+			<div class="input-group">
+			  <span class="input-group-addon">
+			    <input type="radio" name="qr">
+			  </span>
+			  <input type="text" class="form-control">
+			</div>
+		      </p>
+		      
+		    </form>
+		  </div>
+		</div>
+		
+		<!-- end of copy-paste -->
+	      </div>
+	      <div class="modal-footer">
+		<div class="btn-group pull-right" role="group" aria-label="...">
+		  <button class="btn btn-lg btn-default" type="button" data-dismiss="modal">Discard</button>
+		  <button class="btn btn-lg btn-primary" type="button">Save</button>
+		</div>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </div>
