@@ -14,12 +14,11 @@
 */
 
 angular.module('myApp.controllers', []).
-	controller('CoursesCtrl', ['$scope', '$http', '$location',
-		function ($scope, $http, $location) {
+	controller('CoursesCtrl', ['$scope', '$http', '$location', 'CourseService',
+		function ($scope, $http, $location, CourseService) {
 
 		/* DUMMY COURSES */
-		$scope.courses  = {
-			"courses":[
+		$scope.courses  = [
 /*				{
 					id:"Rp268JB6Ne4",
 					created:"2012-02-17T14:54:39.987+0000",
@@ -75,32 +74,18 @@ angular.module('myApp.controllers', []).
 					description:"A basic introduction to religious techno-babble."
 				} */
 			]
-		}
 
 		$scope.numberOfCourses = 0;
-
-		$scope.deleteCourses = function() {
-			$http.delete(dhisAPI + '/api/systemSettings/courses').
-				success(function() {
-					console.log("Deleted successfully.");
-				}).
-				error(function() {
-					console.log("Oh no!");
-				});
-		}
-
-		$scope.createCourse = function() {
-
+/*
+		$scope.populateCourseList = function() {
 			$http.get(dhisAPI + '/api/systemSettings/courses').
 				success(function(data, status, headers, config) {
 					console.log(data);
-					$scope.courses = data;
-					//TODO: Find out how many courses are in the object and set
-					//      $scope.numberOfCourses accordingly.
-
-					//console.log(bloop);
-					var addedCourse = JSON.parse("{\"id\":" + ++$scope.numberOfCourses + ",\"name\":\"Course " + $scope.numberOfCourses + "\"}");
-					var combinedJson = data.concat(addedCourse);
+					$scope.courses.push(data);
+					console.log($scope.courses);
+					console.log("Populated list.");
+				}).
+				error(function(data, status, headers, config) {
 					var req = {
 						method: 'POST',
 						url: dhisAPI + '/api/systemSettings/courses',
@@ -108,19 +93,52 @@ angular.module('myApp.controllers', []).
 							'Accept': 'application/json',
 							'Content-Type': 'text/plain'
 						},
-						data: combinedJson
-							/*id: ++$scope.numberOfCourses, 
-							name:"Course " + $scope.numberOfCourses*/
-						,
+						data: {'none':'empty'},
 					}
 
 					$http(req).success(function() {
-						console.log("Mission complete.");
-					});	
-			}).
-			error(function() {
-				console.log("FISSION MAILED");
+						console.log("Saved empty course.");
+					}).
+					error(function() {
+						console.log("Empty course not saved.");	
+					});
+				});
+		}
+
+		$scope.populateCourseList();
+*/
+		$scope.deleteCourses = function() {
+			
+			CourseService.delete({});
+			$scope.courses = [];
+			$scope.numberOfCourses = 0;
+		/*	CourseService.query(function(data) {
+				$scope.courses = data;
+				$scope.numberOfCourses = courses.length;
 			});
+		*/
+			/*$http.delete(dhisAPI + '/api/systemSettings/courses').
+				success(function() {
+					console.log("Deleted successfully.");
+				}).
+				error(function() {
+					console.log("Oh no!");
+				});*/
+		}
+
+		$scope.createCourse = function() {
+			
+			var addedCourse = {
+				'id': ++$scope.numberOfCourses,
+				'name': "Course " + $scope.numberOfCourses
+			};
+
+			var courses = $scope.courses;
+			console.log(courses);
+
+			courses.push(addedCourse);
+
+			CourseService.save(courses);
 		};
 		
 		$scope.selectedCourseIndex = 0;
@@ -129,7 +147,12 @@ angular.module('myApp.controllers', []).
 			$scope.selectedCourseIndex = $index;
 		};
 
+		CourseService.query(function(data) {
+			$scope.courses = data;
+			$scope.numberOfCourses = data.length;
+		});
 	}])
+
     .controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
         function ($scope, MeService, ProfileService) {
 
