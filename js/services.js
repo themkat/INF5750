@@ -37,7 +37,19 @@ myAppServices.factory("ProfileService", function ($resource) {
     );
 });
 
-
+myAppServices.factory("UserInformationService", function ($resource) {
+    return $resource(
+            dhisAPI+'/api/me',
+        {
+            // If you're passing variables, for example into the URL
+            // they would be here and then as :varName in the URL
+        },
+        {
+            // If you want to implement special functions, you'd
+            // put them here.
+        }
+    );
+});
 
 myAppServices.factory("UserSettingService", function ($resource) {
     return $resource(
