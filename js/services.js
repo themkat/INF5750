@@ -69,3 +69,21 @@ myAppServices.factory("UserSettingService", function ($resource) {
         }
     );
 });
+
+myAppServices.factory("CourseService", function($resource) {
+	return $resource(dhisAPI + '/api/systemSettings/courses',
+	{
+		
+	},
+	{
+		query: {
+			method:'GET',
+			isArray:true,
+			headers: {'Content-Type': 'application/json'}
+		},
+		save: {
+			method:'POST',
+			isArray:true,
+			headers: {'Content-Type': 'text/plain'}}
+	});
+});
