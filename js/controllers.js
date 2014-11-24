@@ -14,8 +14,8 @@
 */
 
 angular.module('myApp.controllers', []).
-	controller('CoursesCtrl', ['$scope', '$location',
-		function ($scope, $location) {
+	controller('CoursesCtrl', ['$scope', '$http', '$location',
+		function ($scope, $http, $location) {
 
 		/* DUMMY COURSES */
 		$scope.courses  = {
@@ -53,7 +53,7 @@ angular.module('myApp.controllers', []).
 					"name":"Martin's course of violence",
 					"lastUpdated":"2014-03-02T21:16:07.293+0000",
 					"code":"OU_278371",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					"href":dhisAPI + "/organisationUnits/cDw53Ej8rju",
 					"description":"Learn how to tackle challenges by shooting them in the face."
 				},
 				{
@@ -76,6 +76,68 @@ angular.module('myApp.controllers', []).
 				}
 			]
 		}
+
+		$scope.numberOfCourses = 0;
+
+		$scope.createCourse = function() {
+
+			var req = {
+				method: 'POST',
+				url: dhisAPI + '/api/systemSettings/courses',
+				headers: {
+					'Content-Type': 'text/plain'
+				},
+				data: { test: 'test' },
+			}
+
+			$http(req).success(function() {
+				console.log("Mission complete.");
+				$http.get(dhisAPI + '/api/systemSettings/courses').
+					success(function(data, status, headers, config) {
+						$scope.courses = {
+							"courses":[
+								{
+									"id":$scope.numberOfCourses++,
+									"name":data
+								}
+							]
+						}
+					}).
+					error(function() {
+						console.log("No can do.");
+					});
+				
+			}).
+			error(function() {
+				console.log("FISSION MAILED");
+			});
+/*
+			$http.post(dhisAPI + '/api/systemSettings/courses', data).
+				success(function(data, status, headers, config) {
+					console.log("Mission complete.");
+				}).
+				error(function(data, status, headers, config) {
+					console.log("FISSION MAILED");
+					return;
+				});
+*/
+/*
+			$http.get(dhisAPI + '/api/systemSettings/courses').
+				success(function(data, status, headers, config) {
+					$scope.courses = {
+						"courses":[
+							{
+								"id":$scope.numberOfCourses++,
+								"name":data
+							}
+						]
+					}
+
+				}).
+				error(function(data, status, headers, config) {
+
+				});*/
+		};
 		
 		$scope.selectedCourseIndex = 0;
 		
