@@ -42,7 +42,7 @@ TODO:
 	<div class="col-sm-8" id="quiz-list">
 		<div class="alert alert-info" role="alert">You are currently signed in as a course administrator.</div>
 		<div class="list-group">
-			<a ng-repeat="course in courses.courses | orderBy : 'name'" 
+			<a ng-repeat="course in courses | orderBy : 'name'" 
 				href="#" 
 				class="list-group-item"
 				ng-click="itemClicked($index)">
@@ -86,7 +86,7 @@ TODO:
 							<button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
 							<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
 							<button class="btn btn-default" type="button">Review</button>
-							<button class="btn btn-default" type="button">Delete</button>
+							<button class="btn btn-default" type="button" ng-click="deleteCourses()">Delete</button>
 						</div>
 					</div>
 				</p>
@@ -207,3 +207,6 @@ TODO:
 	  </div>
 	</div>
 </div>
+
+<!-- Angular UI Accordion 
+     .js-filen ligger i js/ mappa-->
