@@ -20,123 +20,107 @@ angular.module('myApp.controllers', []).
 		/* DUMMY COURSES */
 		$scope.courses  = {
 			"courses":[
-				{
-					"id":"Rp268JB6Ne4",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"TAB Science: One tab equals eight characters",
-					"lastUpdated":"2014-03-02T21:16:00.548+0000",
-					"code":"OU_651071",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
-					"description":"Failing this test will permanently revoke your access to the DHIS2 system."
+/*				{
+					id:"Rp268JB6Ne4",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"TAB Science: One tab equals eight characters",
+					lastUpdated:"2014-03-02T21:16:00.548+0000",
+					code:"OU_651071",
+					href:"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
+					description:"Failing this test will permanently revoke your access to the DHIS2 system."
 				},
 				{
-					"id":"Rp268JB6Ne4",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"Adonkia CHP",
-					"lastUpdated":"2014-03-02T21:16:00.548+0000",
-					"code":"OU_651071",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
-					"description":"This text makes no sense."
+					id:"Rp268JB6Ne4",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"Adonkia CHP",
+					lastUpdated:"2014-03-02T21:16:00.548+0000",
+					code:"OU_651071",
+					href:"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
+					description:"This text makes no sense."
 				},
 				{
-					"id":"cDw53Ej8rju",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"Afro Arab Clinic",
-					"lastUpdated":"2014-03-02T21:16:07.293+0000",
-					"code":"OU_278371",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					"description":"This whole thing is just ridiculous."
+					id:"cDw53Ej8rju",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"Afro Arab Clinic",
+					lastUpdated:"2014-03-02T21:16:07.293+0000",
+					code:"OU_278371",
+					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					description:"This whole thing is just ridiculous."
 				},
 				{
-					"id":"cDw53Ej8rju",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"Martin's course of violence",
-					"lastUpdated":"2014-03-02T21:16:07.293+0000",
-					"code":"OU_278371",
-					"href":dhisAPI + "/organisationUnits/cDw53Ej8rju",
-					"description":"Learn how to tackle challenges by shooting them in the face."
+					id:"cDw53Ej8rju",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"Martin's course of violence",
+					lastUpdated:"2014-03-02T21:16:07.293+0000",
+					code:"OU_278371",
+					href:dhisAPI + "/organisationUnits/cDw53Ej8rju",
+					description:"Learn how to tackle challenges by shooting them in the face."
 				},
 				{
-					"id":"cDw53Ej8rju",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"Oh hey there JavaScript",
-					"lastUpdated":"2014-03-02T21:16:07.293+0000",
-					"code":"OU_278371",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					"description":"Seems like you have to cooperate after all."
+					id:"cDw53Ej8rju",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"Oh hey there JavaScript",
+					lastUpdated:"2014-03-02T21:16:07.293+0000",
+					code:"OU_278371",
+					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					description:"Seems like you have to cooperate after all."
 				},
 				{
-					"id":"cDw53Ej8rju",
-					"created":"2012-02-17T14:54:39.987+0000",
-					"name":"Stupidity and horrific coding practices",
-					"lastUpdated":"2014-03-02T21:16:07.293+0000",
-					"code":"OU_278371",
-					"href":"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					"description":"A basic introduction to religious techno-babble."
-				}
+					id:"cDw53Ej8rju",
+					created:"2012-02-17T14:54:39.987+0000",
+					name:"Stupidity and horrific coding practices",
+					lastUpdated:"201:4-03-02T21:16:07.293+0000",
+					code:"OU_278371",
+					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
+					description:"A basic introduction to religious techno-babble."
+				} */
 			]
 		}
 
 		$scope.numberOfCourses = 0;
 
+		$scope.deleteCourses = function() {
+			$http.delete(dhisAPI + '/api/systemSettings/courses').
+				success(function() {
+					console.log("Deleted successfully.");
+				}).
+				error(function() {
+					console.log("Oh no!");
+				});
+		}
+
 		$scope.createCourse = function() {
 
-			var req = {
-				method: 'POST',
-				url: dhisAPI + '/api/systemSettings/courses',
-				headers: {
-					'Content-Type': 'text/plain'
-				},
-				data: { test: 'test' },
-			}
+			$http.get(dhisAPI + '/api/systemSettings/courses').
+				success(function(data, status, headers, config) {
+					console.log(data);
+					$scope.courses = data;
+					//TODO: Find out how many courses are in the object and set
+					//      $scope.numberOfCourses accordingly.
 
-			$http(req).success(function() {
-				console.log("Mission complete.");
-				$http.get(dhisAPI + '/api/systemSettings/courses').
-					success(function(data, status, headers, config) {
-						$scope.courses = {
-							"courses":[
-								{
-									"id":$scope.numberOfCourses++,
-									"name":data
-								}
-							]
-						}
-					}).
-					error(function() {
-						console.log("No can do.");
-					});
-				
+					//console.log(bloop);
+					var addedCourse = JSON.parse("{\"id\":" + ++$scope.numberOfCourses + ",\"name\":\"Course " + $scope.numberOfCourses + "\"}");
+					var combinedJson = data.concat(addedCourse);
+					var req = {
+						method: 'POST',
+						url: dhisAPI + '/api/systemSettings/courses',
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'text/plain'
+						},
+						data: combinedJson
+							/*id: ++$scope.numberOfCourses, 
+							name:"Course " + $scope.numberOfCourses*/
+						,
+					}
+
+					$http(req).success(function() {
+						console.log("Mission complete.");
+					});	
 			}).
 			error(function() {
 				console.log("FISSION MAILED");
 			});
-/*
-			$http.post(dhisAPI + '/api/systemSettings/courses', data).
-				success(function(data, status, headers, config) {
-					console.log("Mission complete.");
-				}).
-				error(function(data, status, headers, config) {
-					console.log("FISSION MAILED");
-					return;
-				});
-*/
-/*
-			$http.get(dhisAPI + '/api/systemSettings/courses').
-				success(function(data, status, headers, config) {
-					$scope.courses = {
-						"courses":[
-							{
-								"id":$scope.numberOfCourses++,
-								"name":data
-							}
-						]
-					}
-
-				}).
-				error(function(data, status, headers, config) {
-
-				});*/
 		};
 		
 		$scope.selectedCourseIndex = 0;
