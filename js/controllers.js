@@ -144,7 +144,7 @@ angular.module('myApp.controllers', []).
 		$scope.selectedCourseIndex = 0;
 		
 		$scope.itemClicked = function ($index) {
-			$scope.selectedCourseIndex = $index;
+		    $scope.selectedCourseIndex = $index;
 		};
 
 		CourseService.query(function(data) {

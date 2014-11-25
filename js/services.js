@@ -51,7 +51,7 @@ myAppServices.factory("UserInformationService", function ($resource) {
 	    // query
 	    query: {
 		method:'GET',
-		isArray:true,
+		isArray:false,
 		headers: {'Content-Type': 'application/json'}
 	    },
         }
