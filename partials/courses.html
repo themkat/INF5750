@@ -120,6 +120,22 @@
 	  </div> -->
 
 					<!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
+					<!-- Name -->
+					<p>
+					<div class="input-group primary">
+						<span class="input-group-addon">Course name</span>
+						<input type="text" class="form-control" ng-model="modalVars.name" required="true" />
+					</div>
+					</p>
+
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#description" data-parent="#quiz-modal">
+							<h3 class="panel-title">Description</h3>
+						</div>
+						<div class="panel-body collapse" id="description">
+							<textarea class="form-control" ng-model="modalVars.description" placeholder="Description goes here."></textarea>
+						</div>
+					</div>
 
 					<!-- Motivation panel -->
 					<div class="panel panel-default">
@@ -146,13 +162,18 @@
 						<div class="panel-body" id="quiz_edit">
 							<div class="input-group">
 								<select class="form-control input-lg" id="quiz_questions">
-									<option ng-repeat="(index, question) in modalVars.questions | orderBy : 'question'"
+									<option ng-repeat="(index, question) in modalVars.questions | orderBy : 'question.id'"
 									ng-click="questionClicked(index)">
 									Question {{question.id}}
 									</option>
 								</select>
 								<span class="input-group-addon">
-									<button class="btn btn-sm btn-success" type="button">+</button>
+									<button class="btn btn-sm btn-success" type="button" ng-click="addQuestion()">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<button class="btn btn-sm btn-warning" type="button" ng-click="deleteQuestion()">
+										<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									</button>
 								</span>
 							</div>
 							<hr />

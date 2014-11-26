@@ -30,17 +30,7 @@ angular.module('myApp.controllers', []).
 
 			return -1;
 		}
-/*
-		$scope.questionIdToIndex = function() {
-			if ($scope.modalVars) {
-				for(var i = 0; i < $scope.modalVars.questions.length; i++) {
-					if ($scope.modalVars.questions[i].id == $scope.selectedQuestion) {
-						return i;
-					}
-				}
-			}
-		}
-*/
+		
 		// Array Remove - authored by John Resig (MIT Licensed)
 		Array.prototype.remove = function(from, to) {
 			var rest = this.slice((to || from) + 1 || this.length);
@@ -54,7 +44,6 @@ angular.module('myApp.controllers', []).
 
 		// Delete the currently selected course
 		$scope.deleteCourse = function() {
-			return;
 			var index = $scope.courseIdToIndex();
 			var modCourses = $scope.courses;
 
@@ -73,12 +62,11 @@ angular.module('myApp.controllers', []).
 			$scope.selectedQuestion = 0;
 			$scope.answers = [];
 			$scope.modalVars = null;
+			$scope.maxId();
 		}
 
 		// Add a new course to the list with a default name and id
 		$scope.createCourse = function() {
-			alert("I can't let you do that, Dave.");
-			return;
 			$scope.maxId();
 			++$scope.numberOfCourses;
 
@@ -124,17 +112,12 @@ angular.module('myApp.controllers', []).
 
 		// Find the highest ID among courses
 		$scope.maxId = function() {
+			$scope.highestId = 0;
 			for (var i = 0; i < $scope.numberOfCourses; i++) {
-				if ($scope.courses.id > $scope.highestId) {
-					$scope.highestId = $scope.courses.id;
-					console.log("Highest ID is now " + $scope.highestId);
+				if ($scope.courses[i].id > $scope.highestId) {
+					$scope.highestId = $scope.courses[i].id;
 				}
 			}
-		}
-
-		$scope.query = function() {
-			CourseInfo.setCourses($scope.courses);
-			CourseInfo.setSelectedIndex($scope.courseIdToIndex());
 		}
 
 		$scope.modalVars = null;
@@ -151,18 +134,45 @@ angular.module('myApp.controllers', []).
 				$scope.courses = data;
 				$scope.numberOfCourses = data.length;
 				$scope.maxId();
+				$scope.populateEditTable();
 			});
 		}
 
 		$scope.populateEditTable = function() {
 			var index = $scope.courseIdToIndex();
 			$scope.modalVars = $scope.courses[index];
-//			$scope.questionIdToIndex();
 			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 		}
 
 		$scope.addQuestion = function() {
-			
+			var highestId = 0;
+
+			for (var i = 0; i < $scope.modalVars.questions.length; i++) {
+				if ($scope.modalVars.questions[i].id > highestId) {
+					highestId = $scope.modalVars.questions[i].id;
+				}
+			}
+			var question = {
+				'question': "Question",
+				'id': ++highestId,
+				'answers': [
+					"Answer 1",
+					"Answer 2",
+					"Answer 3",
+				],
+				'correct': 0
+			}
+
+			$scope.modalVars.questions.push(question);
+		}
+
+		$scope.deleteQuestion = function() {
+			if ($scope.modalVars.questions.length <= 1) {
+				return;
+			}
+			$scope.modalVars.questions.remove($scope.selectedQuestion);
+			$scope.selectedQuestion = 0;
+			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 		}
 
 		// Populate list of courses with data from the server
@@ -172,7 +182,7 @@ angular.module('myApp.controllers', []).
 			$scope.maxId();
 		});
 	}])
-
+/*
     .controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
         function ($scope, MeService, ProfileService) {
 
@@ -262,7 +272,6 @@ angular.module('myApp.controllers', []).
             $scope.markers = new Array();
         }
 
-        // Add an initial marker
         $scope.markers.push({
             lat: $scope.location.lat,
             lng: $scope.location.lng,
@@ -364,7 +373,7 @@ angular.module('myApp.controllers', []).
                         name: 'Google Streets',
                         layerType: 'ROADMAP',
                         type: 'google'
-                    }/*,
+                    },
                     landscape: {
                         name: 'Landscape',
                         type: 'xyz',
@@ -400,9 +409,9 @@ angular.module('myApp.controllers', []).
                             subdomains: ['a', 'b', 'c'],
                             continuousWorld: true
                         }
-                    }*/
+                    }
                 }
             }
         });
     }]);
-
+	*/
