@@ -75,40 +75,34 @@ angular.module('myApp.controllers', []).
 				} */
 			]
 
-		$scope.numberOfCourses = 0;
-/*
-		$scope.populateCourseList = function() {
-			$http.get(dhisAPI + '/api/systemSettings/courses').
-				success(function(data, status, headers, config) {
-					console.log(data);
-					$scope.courses.push(data);
-					console.log($scope.courses);
-					console.log("Populated list.");
-				}).
-				error(function(data, status, headers, config) {
-					var req = {
-						method: 'POST',
-						url: dhisAPI + '/api/systemSettings/courses',
-						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'text/plain'
-						},
-						data: {'none':'empty'},
-					}
-
-					$http(req).success(function() {
-						console.log("Saved empty course.");
-					}).
-					error(function() {
-						console.log("Empty course not saved.");	
-					});
-				});
+		$scope.courseIdToIndex = function() {
+			for (var i = 0; i < $scope.numberOfCourses; i++) {
+				if ($scope.courses[i].id == $scope.selectedCourseIndex) {
+					return i;
+				}
+			}
 		}
 
-		$scope.populateCourseList();
-*/
-		$scope.deleteCourses = function() {
-			
+		// Array Remove - authored by John Resig (MIT Licensed)
+		Array.prototype.remove = function(from, to) {
+			var rest = this.slice((to || from) + 1 || this.length);
+			this.length = from < 0 ? this.length + from : from;
+			return this.push.apply(this, rest);
+		}
+
+		$scope.numberOfCourses = 0;
+
+		$scope.deleteCourse = function() {
+			var modCourses = $scope.courses;
+			console.log("Course to delete: " + $scope.selectedCourseIndex);
+			console.log(modCourses[$scope.courseIdToIndex()]);
+			modCourses.remove($scope.courseIdToIndex());
+			CourseService.save(modCourses);
+			$scope.courses = modCourses;
+		}
+
+
+		$scope.deleteCourses = function() {	
 			CourseService.delete({});
 			$scope.courses = [];
 			$scope.numberOfCourses = 0;
@@ -137,7 +131,7 @@ angular.module('myApp.controllers', []).
 			console.log(courses);
 
 			courses.push(addedCourse);
-
+			console.log(courses);
 			CourseService.save(courses);
 		};
 		
