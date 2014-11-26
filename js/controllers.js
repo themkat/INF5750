@@ -101,25 +101,6 @@ angular.module('myApp.controllers', []).
 			$scope.courses = modCourses;
 		}
 
-
-		$scope.deleteCourses = function() {	
-			CourseService.delete({});
-			$scope.courses = [];
-			$scope.numberOfCourses = 0;
-		/*	CourseService.query(function(data) {
-				$scope.courses = data;
-				$scope.numberOfCourses = courses.length;
-			});
-		*/
-			/*$http.delete(dhisAPI + '/api/systemSettings/courses').
-				success(function() {
-					console.log("Deleted successfully.");
-				}).
-				error(function() {
-					console.log("Oh no!");
-				});*/
-		}
-
 		$scope.createCourse = function() {
 			
 			var addedCourse = {
