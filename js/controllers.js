@@ -75,12 +75,16 @@ angular.module('myApp.controllers', []).
 				} */
 			]
 
+		// Determine where in the list a given course is and return the index
 		$scope.courseIdToIndex = function() {
 			for (var i = 0; i < $scope.numberOfCourses; i++) {
+				console.log("Checking index " + i + " of " + $scope.numberOfCourses + ".");
 				if ($scope.courses[i].id == $scope.selectedCourseIndex) {
 					return i;
 				}
 			}
+
+			return -1;
 		}
 
 		// Array Remove - authored by John Resig (MIT Licensed)
@@ -90,22 +94,36 @@ angular.module('myApp.controllers', []).
 			return this.push.apply(this, rest);
 		}
 
+		$scope.highestId = 0;
+
 		$scope.numberOfCourses = 0;
 
+		// Delete the currently selected course
 		$scope.deleteCourse = function() {
+			var index = $scope.courseIdToIndex();
 			var modCourses = $scope.courses;
+
+			if (-1 == index) {
+				return;
+			}
+
 			console.log("Course to delete: " + $scope.selectedCourseIndex);
-			console.log(modCourses[$scope.courseIdToIndex()]);
-			modCourses.remove($scope.courseIdToIndex());
+			console.log(modCourses[index]);
+			modCourses.remove(index);
 			CourseService.save(modCourses);
 			$scope.courses = modCourses;
+			$scope.numberOfCourses = $scope.courses.length;
 		}
 
+		// Add a new course to the list with a default name and id
 		$scope.createCourse = function() {
-			
+			$scope.maxId();
+			++$scope.numberOfCourses;
+
 			var addedCourse = {
-				'id': ++$scope.numberOfCourses,
-				'name': "Course " + $scope.numberOfCourses
+				'id': ++$scope.highestId,
+				'name': "Course " + $scope.highestId,
+				'description': "Placeholder description."
 			};
 
 			var courses = $scope.courses;
@@ -118,13 +136,25 @@ angular.module('myApp.controllers', []).
 		
 		$scope.selectedCourseIndex = 0;
 		
-		$scope.itemClicked = function ($index) {
+		$scope.itemClicked = function($index) {
 		    $scope.selectedCourseIndex = $index;
 		};
 
+		// Find the highest ID among courses
+		$scope.maxId = function() {
+			for (var i = 0; i < $scope.numberOfCourses; i++) {
+				if ($scope.courses.id > $scope.highestId) {
+					$scope.highestId = $scope.courses.id;
+					console.log("Highest ID is now " + $scope.highestId);
+				}
+			}
+		}
+
+		// Populate list of courses with data from the server
 		CourseService.query(function(data) {
 			$scope.courses = data;
 			$scope.numberOfCourses = data.length;
+			$scope.maxId();
 		});
 	}])
 
