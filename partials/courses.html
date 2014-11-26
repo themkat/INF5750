@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page-header" ng-controller="UserInformationController" ng-show="isAdmin">
   <h1>Administration <small>manage courses</small></h1>
 </div>
 <!-- 
@@ -6,7 +6,7 @@
      - klikk på tekster for å få opp redigeringsinfo.
      - legg til sidemeny hvor man kan se info om course man har trykket på
   -->
-<div class="row">
+<div class="row" ng-controller="UserInformationController" ng-show="isAdmin">
   <div class="col-sm-8">
     <div class="panel panel-default">
       <div class="panel-heading">Statistical information</div>
@@ -29,7 +29,7 @@
       <div class="panel-heading">Management information</div>
       <div class="panel-body">
 	<p>
-	  This section is available to you because you are currently signed in with course administration privileges. {{isAdmin}}
+	  This section is available to you because you are currently signed in with course administration privileges.
 	</p>
       </div>
     </div>
@@ -40,7 +40,9 @@
 </div>
 <div class="row">
   <div class="col-sm-8" id="quiz-list">
-    <div class="alert alert-info" role="alert">You are currently signed in as a course administrator.</div>
+    <div ng-controller="UserInformationController" ng-show="isAdmin">
+      <div class="alert alert-info" role="alert">Hi <b>{{userInformation.name}}</b>! You have been recognised as a course administrator.</div>
+    </div>
     <div class="list-group">
       <a ng-repeat="course in courses | orderBy : 'name'" 
 	  
@@ -66,16 +68,13 @@
 	<p>
 	  <div class="text-center">
 	    <div class="btn-group" role="group" aria-label="...">
-	      <button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
 	      <button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
-	      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Review</button>
-	      <button class="btn btn-default" type="button">Delete</button>
 	    </div>
 	  </div>
 	</p>
       </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-controller="UserInformationController" ng-show="isAdmin">
       <div class="panel-heading">Administration</div>
       <div class="panel-body">
 	<p>These are the actions that you, high priest of this system, may perform on a course.</p>
@@ -84,8 +83,7 @@
 	  <div class="text-center">
 	    <div class="btn-group" role="group" aria-label="...">
 	      <button class="btn btn-primary" type="button" ng-click="createCourse()">Create</button>
-	      <button class="btn btn-default" type="button" ng-click="changeView('qm')">Edit</button>
-	      <button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+	      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
 	      <button class="btn btn-default" type="button">Review</button>
 	      <button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
 	    </div>
