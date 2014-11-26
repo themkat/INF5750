@@ -1,19 +1,24 @@
 angular.module('myApp.controllers')
-    .controller('UserInformationController', ['$scope', '$http', 'UserInformationService',
+	.controller('UserInformationController', ['$scope', '$http', 'UserInformationService',
 		function($scope, $http, UserInformationService) {
-		    
-		    $scope.dhisAPI = dhisAPI;
-		    
-		    $scope.isAdmin = 'no'
-		    
-		    UserInformationService.query(function (res) {
-			// sjekker om brukeren er superuser, og outputter yes/no til variablen isAdmin.
-			// bruke gruppe-id fremfor navn
-			// todo: gjør den om til true/false
-			res.userCredentials.userAuthorityGroups.forEach(function(el) {
-			    if('Ufph3mGRmMo' === el.id) {
-				$scope.isAdmin = 'yes';
-			    }
-			});;
-		    });
-}]);
+			$scope.dhisAPI = dhisAPI;
+			console.log("fadfadfasdf");
+			UserInformationService.query(function (res) {
+				$scope.userInformation = res;
+				$scope.isQuizAdmin = false;
+				res.groups.forEach(function(group) {
+					//$scope.isAdmin = false;
+					//return;
+					$scope.isAdmin = 
+						$scope.isAdmin
+							? true : 
+						"Administrators" === group.name
+							? true : 
+						"System administrators" === group.name
+							? true : 
+						"Quiz" === group.name
+							? true : false;
+					console.log($scope.isAdmin);
+				});
+			});
+	}]);
