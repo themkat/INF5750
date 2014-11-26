@@ -84,7 +84,7 @@
 	    <div class="btn-group" role="group" aria-label="...">
 	      <button class="btn btn-primary" type="button" ng-click="createCourse()">Create</button>
 	      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
-	      <button class="btn btn-default" type="button">Review</button>
+	      <button class="btn btn-default" type="button" ng-click="query()">Review</button>
 	      <button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
 	    </div>
 	  </div>
@@ -94,7 +94,7 @@
     
   </div>
   
-  <div class="modal fade" id="quiz_modal" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="quiz_modal" role="dialog" aria-hidden="true" ng-controller="QuizEditController">
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">
@@ -127,10 +127,10 @@
 	      <h3 class="panel-title">Motivation</h3>
 	    </div>
 	    <div class="panel-body collapse" id="motivation">
-	      <textarea class="form-control" placeholder="The motivation of this course..."></textarea>
+	      <textarea class="form-control" ng-model="motivation" placeholder="The motivation of this course..."></textarea>
 	      <p>
 		<div class="btn-group pull-right" role="group" aria-label="...">
-		  <button class="btn btn-default" type="button">Discard</button>
+		  <button class="btn btn-default" type="button" ng-click="buttonClick()">Discard</button>
 		  <button class="btn btn-primary" type="button">Apply</button>
 		</div>
 	      </p>
