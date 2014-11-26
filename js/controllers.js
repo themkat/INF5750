@@ -30,7 +30,17 @@ angular.module('myApp.controllers', []).
 
 			return -1;
 		}
-
+/*
+		$scope.questionIdToIndex = function() {
+			if ($scope.modalVars) {
+				for(var i = 0; i < $scope.modalVars.questions.length; i++) {
+					if ($scope.modalVars.questions[i].id == $scope.selectedQuestion) {
+						return i;
+					}
+				}
+			}
+		}
+*/
 		// Array Remove - authored by John Resig (MIT Licensed)
 		Array.prototype.remove = function(from, to) {
 			var rest = this.slice((to || from) + 1 || this.length);
@@ -67,21 +77,27 @@ angular.module('myApp.controllers', []).
 			var addedCourse = {
 				'id': ++$scope.highestId,
 				'name': "Course " + $scope.highestId,
-				'description': "Placeholder description.",
-				'motivation': "Placeholder motivation.",
-				'stepbystep': "Placeholder step-by-step.",
+				'description': "Placeholder description for course " + $scope.highestId,
+				'motivation': "Placeholder motivation for course " + $scope.highestId,
+				'stepbystep': "Placeholder step-by-step for course " + $scope.highestId,
 				'questions': [
 					{
 						'question':"Placeholder question 1?",
-						'answer1':"Placeholder answer 1-1.",
-						'answer2':"Placeholder answer 1-2.",
-						'answer3':"Placeholder answer 1-3."
+						'id':1,
+						'answers': [
+							"Placeholder answer 1-1.",
+							"Placeholder answer 1-2.",
+							"Placeholder answer 1-3."
+						]
 					},
 					{
 						'question':"Placeholder question 2?",
-						'answer1':"Placeholder answer 2-1.",
-						'answer2':"Placeholder answer 2-2.",
-						'answer3':"Placeholder answer 2-3."
+						'id':2,
+						'answers': [
+							"Placeholder answer 2-1.",
+							"Placeholder answer 2-2.",
+							"Placeholder answer 2-3."
+						]
 					}
 				]
 			};
@@ -92,14 +108,19 @@ angular.module('myApp.controllers', []).
 			courses.push(addedCourse);
 			console.log(courses);
 			CourseService.save(courses);
-		};
+		}
 		
 		$scope.selectedCourseIndex = 0;
 		
 		$scope.itemClicked = function($index) {
 		    $scope.selectedCourseIndex = $index;
-			CourseInfo.setSelectedIndex($scope.courseIdToIndex());
-		};
+			$scope.populateEditTable();
+		}
+
+		$scope.questionClicked = function(id) {
+			$scope.selectedQuestion = id;
+			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
+		}
 
 		// Find the highest ID among courses
 		$scope.maxId = function() {
@@ -114,15 +135,23 @@ angular.module('myApp.controllers', []).
 		$scope.query = function() {
 			CourseInfo.setCourses($scope.courses);
 			CourseInfo.setSelectedIndex($scope.courseIdToIndex());
-			console.log("Selected course: " + CourseInfo.getSelectedIndex());
-			console.log("Courses: " + CourseInfo.getCourses());
+		}
+
+		$scope.modalVars = null;
+
+		$scope.selectedQuestion = 0;
+		$scope.answers = [];
+
+		$scope.populateEditTable = function() {
+			var index = $scope.courseIdToIndex();
+			$scope.modalVars = $scope.courses[index];
+//			$scope.questionIdToIndex();
+			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 		}
 
 		// Populate list of courses with data from the server
 		CourseService.query(function(data) {
 			$scope.courses = data;
-	//		CourseInfo.setCourses($scope.courses);
-	//		CourseInfo.setSelectedIndex(0);
 			$scope.numberOfCourses = data.length;
 			$scope.maxId();
 		});
