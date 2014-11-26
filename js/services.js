@@ -94,3 +94,42 @@ myAppServices.factory("CourseService", function($resource) {
 			headers: {'Content-Type': 'text/plain'}}
 	});
 });
+
+myAppServices.factory("CourseInfo", function() {
+	var data = {
+		Courses: [],
+		SelectedIndex: 0
+	};
+
+	var edited = false;
+
+	return {
+		getCourses: function() {
+			if (edited == false) {
+				console.log("No edits? WTF?");
+			} else {
+				console.log("It's been edited before, dude.");
+			}
+			return data.Courses;
+		},
+		setCourses: function(courses) {
+			console.log("SETTING COURSES TO " + courses);
+			data.Courses = courses;
+			edited = true;
+		},
+		getSelectedIndex: function() {
+			if (edited == false) {
+				console.log("IT'S NEVER BEEN EDITED!");
+			} else {
+				console.log("Yup. Edited alright.");
+			}
+			return data.SelectedIndex;
+		},
+		setSelectedIndex: function(selectedIndex) {
+			console.log("SETTING INDEX TO " + selectedIndex);
+			data.SelectedIndex = selectedIndex;
+			edited = true;
+		}
+	};
+
+});

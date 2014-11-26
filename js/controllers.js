@@ -14,71 +14,15 @@
 */
 
 angular.module('myApp.controllers', []).
-	controller('CoursesCtrl', ['$scope', '$http', '$location', 'CourseService',
-		function ($scope, $http, $location, CourseService) {
+	controller('CoursesCtrl', ['$scope', '$http', '$location', 'CourseService', 'CourseInfo',
+		function ($scope, $http, $location, CourseService, CourseInfo) {
 
 		/* DUMMY COURSES */
-		$scope.courses  = [
-/*				{
-					id:"Rp268JB6Ne4",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"TAB Science: One tab equals eight characters",
-					lastUpdated:"2014-03-02T21:16:00.548+0000",
-					code:"OU_651071",
-					href:"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
-					description:"Failing this test will permanently revoke your access to the DHIS2 system."
-				},
-				{
-					id:"Rp268JB6Ne4",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"Adonkia CHP",
-					lastUpdated:"2014-03-02T21:16:00.548+0000",
-					code:"OU_651071",
-					href:"http://inf5750-17.uio.no/api/organisationUnits/Rp268JB6Ne4",
-					description:"This text makes no sense."
-				},
-				{
-					id:"cDw53Ej8rju",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"Afro Arab Clinic",
-					lastUpdated:"2014-03-02T21:16:07.293+0000",
-					code:"OU_278371",
-					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					description:"This whole thing is just ridiculous."
-				},
-				{
-					id:"cDw53Ej8rju",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"Martin's course of violence",
-					lastUpdated:"2014-03-02T21:16:07.293+0000",
-					code:"OU_278371",
-					href:dhisAPI + "/organisationUnits/cDw53Ej8rju",
-					description:"Learn how to tackle challenges by shooting them in the face."
-				},
-				{
-					id:"cDw53Ej8rju",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"Oh hey there JavaScript",
-					lastUpdated:"2014-03-02T21:16:07.293+0000",
-					code:"OU_278371",
-					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					description:"Seems like you have to cooperate after all."
-				},
-				{
-					id:"cDw53Ej8rju",
-					created:"2012-02-17T14:54:39.987+0000",
-					name:"Stupidity and horrific coding practices",
-					lastUpdated:"201:4-03-02T21:16:07.293+0000",
-					code:"OU_278371",
-					href:"http://inf5750-17.uio.no/api/organisationUnits/cDw53Ej8rju",
-					description:"A basic introduction to religious techno-babble."
-				} */
-			]
+		$scope.courses  = []
 
 		// Determine where in the list a given course is and return the index
 		$scope.courseIdToIndex = function() {
 			for (var i = 0; i < $scope.numberOfCourses; i++) {
-				console.log("Checking index " + i + " of " + $scope.numberOfCourses + ".");
 				if ($scope.courses[i].id == $scope.selectedCourseIndex) {
 					return i;
 				}
@@ -123,7 +67,23 @@ angular.module('myApp.controllers', []).
 			var addedCourse = {
 				'id': ++$scope.highestId,
 				'name': "Course " + $scope.highestId,
-				'description': "Placeholder description."
+				'description': "Placeholder description.",
+				'motivation': "Placeholder motivation.",
+				'stepbystep': "Placeholder step-by-step.",
+				'questions': [
+					{
+						'question':"Placeholder question 1?",
+						'answer1':"Placeholder answer 1-1.",
+						'answer2':"Placeholder answer 1-2.",
+						'answer3':"Placeholder answer 1-3."
+					},
+					{
+						'question':"Placeholder question 2?",
+						'answer1':"Placeholder answer 2-1.",
+						'answer2':"Placeholder answer 2-2.",
+						'answer3':"Placeholder answer 2-3."
+					}
+				]
 			};
 
 			var courses = $scope.courses;
@@ -138,6 +98,7 @@ angular.module('myApp.controllers', []).
 		
 		$scope.itemClicked = function($index) {
 		    $scope.selectedCourseIndex = $index;
+			CourseInfo.setSelectedIndex($scope.courseIdToIndex());
 		};
 
 		// Find the highest ID among courses
@@ -150,9 +111,18 @@ angular.module('myApp.controllers', []).
 			}
 		}
 
+		$scope.query = function() {
+			CourseInfo.setCourses($scope.courses);
+			CourseInfo.setSelectedIndex($scope.courseIdToIndex());
+			console.log("Selected course: " + CourseInfo.getSelectedIndex());
+			console.log("Courses: " + CourseInfo.getCourses());
+		}
+
 		// Populate list of courses with data from the server
 		CourseService.query(function(data) {
 			$scope.courses = data;
+	//		CourseInfo.setCourses($scope.courses);
+	//		CourseInfo.setSelectedIndex(0);
 			$scope.numberOfCourses = data.length;
 			$scope.maxId();
 		});
