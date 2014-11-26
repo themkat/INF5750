@@ -14,8 +14,8 @@
 */
 
 angular.module('myApp.controllers', []).
-	controller('CoursesCtrl', ['$scope', '$http', '$location', 'CourseService', 'CourseInfo',
-		function ($scope, $http, $location, CourseService, CourseInfo) {
+	controller('CoursesCtrl', ['$scope', '$http', '$route', 'CourseService', 'CourseInfo',
+		function ($scope, $http, $route, CourseService, CourseInfo) {
 
 		/* DUMMY COURSES */
 		$scope.courses  = []
@@ -54,6 +54,7 @@ angular.module('myApp.controllers', []).
 
 		// Delete the currently selected course
 		$scope.deleteCourse = function() {
+			return;
 			var index = $scope.courseIdToIndex();
 			var modCourses = $scope.courses;
 
@@ -67,10 +68,17 @@ angular.module('myApp.controllers', []).
 			CourseService.save(modCourses);
 			$scope.courses = modCourses;
 			$scope.numberOfCourses = $scope.courses.length;
+
+			$scope.selectedCourseIndex = 0;
+			$scope.selectedQuestion = 0;
+			$scope.answers = [];
+			$scope.modalVars = null;
 		}
 
 		// Add a new course to the list with a default name and id
 		$scope.createCourse = function() {
+			alert("I can't let you do that, Dave.");
+			return;
 			$scope.maxId();
 			++$scope.numberOfCourses;
 
@@ -78,26 +86,18 @@ angular.module('myApp.controllers', []).
 				'id': ++$scope.highestId,
 				'name': "Course " + $scope.highestId,
 				'description': "Placeholder description for course " + $scope.highestId,
-				'motivation': "Placeholder motivation for course " + $scope.highestId,
-				'stepbystep': "Placeholder step-by-step for course " + $scope.highestId,
+				'motivation': "",
+				'stepbystep': "",
 				'questions': [
 					{
-						'question':"Placeholder question 1?",
-						'id':1,
+						'question': "Question",
+						'id': 1,
 						'answers': [
-							"Placeholder answer 1-1.",
-							"Placeholder answer 1-2.",
-							"Placeholder answer 1-3."
-						]
-					},
-					{
-						'question':"Placeholder question 2?",
-						'id':2,
-						'answers': [
-							"Placeholder answer 2-1.",
-							"Placeholder answer 2-2.",
-							"Placeholder answer 2-3."
-						]
+							"Answer 1",
+							"Answer 2",
+							"Answer 3",
+						],
+						'correct': 0
 					}
 				]
 			};
@@ -142,11 +142,27 @@ angular.module('myApp.controllers', []).
 		$scope.selectedQuestion = 0;
 		$scope.answers = [];
 
+		$scope.saveChanges = function() {
+			CourseService.save($scope.courses);
+		}
+
+		$scope.discardChanges = function() {
+			CourseService.query(function(data) {
+				$scope.courses = data;
+				$scope.numberOfCourses = data.length;
+				$scope.maxId();
+			});
+		}
+
 		$scope.populateEditTable = function() {
 			var index = $scope.courseIdToIndex();
 			$scope.modalVars = $scope.courses[index];
 //			$scope.questionIdToIndex();
 			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
+		}
+
+		$scope.addQuestion = function() {
+			
 		}
 
 		// Populate list of courses with data from the server

@@ -1,217 +1,205 @@
 <div class="page-header" ng-controller="UserInformationController" ng-show="isAdmin">
-  <h1>Administration <small>manage courses</small></h1>
+	<h1>Courses <small>overview</small></h1>
 </div>
 <!-- 
-     TODO:
-     - klikk på tekster for å få opp redigeringsinfo.
-     - legg til sidemeny hvor man kan se info om course man har trykket på
+	 TODO:
+	 - klikk på tekster for å få opp redigeringsinfo.
+	 - legg til sidemeny hvor man kan se info om course man har trykket på
   -->
 <div class="row" ng-controller="UserInformationController" ng-show="isAdmin">
-  <div class="col-sm-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">Statistical information</div>
-      <div class="panel-body">
-	<p>This is where we'll show you the number of available courses and their completion ratio.</p>
-	<hr />
-	<p>Just take a look at this nice progress bar.</p>
-	<p>
-	  <div class="progress">
-	    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-	      60%
-	    </div>
-	  </div>				
-	</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Management information</div>
-      <div class="panel-body">
-	<p>
-	  This section is available to you because you are currently signed in with course administration privileges.
-	</p>
-      </div>
-    </div>
+	<div class="col-sm-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">Statistical information</div>
+			<div class="panel-body">
+				<p>This is where we'll show you the number of available courses and their completion ratio.</p>
+				<hr />
+				<p>Just take a look at this nice progress bar.</p>
+				<p>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+						60%
+					</div>
+				</div>				
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Management information</div>
+			<div class="panel-body">
+				<p>
+				This section is available to you because you are currently signed in with course administration privileges.
+				</p>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="page-header">
-  <h1>Courses <small>overview</small></h1>
+	<h1>Administration <small>manage courses</small></h1>
 </div>
 <div class="row">
-  <div class="col-sm-8" id="quiz-list">
-    <div ng-controller="UserInformationController" ng-show="isAdmin">
-      <div class="alert alert-info" role="alert">Hi <b>{{userInformation.name}}</b>! You have been recognised as a course administrator.</div>
-    </div>
-    <div class="list-group">
-      <a ng-repeat="course in courses | orderBy : 'name'" 
-	  
-	 class="list-group-item"
-	 ng-class="{active: selectedCourseIndex === course.id}"
-	 ng-click="itemClicked(course.id)">
-	
-	<h4 class="list-group-item-heading">{{course.name}}</h4>
-	<p class="list-group-item-text">{{course.description}}</p>
-      </a>
-    </div>
+	<div class="col-sm-8" id="quiz-list">
+		<div ng-controller="UserInformationController" ng-show="isAdmin">
+			<div class="alert alert-info" role="alert">Hi <b>{{userInformation.name}}</b>! You have been recognised as a course administrator.</div>
+		</div>
+		<div class="list-group">
+			<a ng-repeat="course in courses | orderBy : 'name'" 
+
+				class="list-group-item"
+				ng-class="{active: selectedCourseIndex === course.id}"
+				ng-click="itemClicked(course.id)">
+
+				<h4 class="list-group-item-heading">{{course.name}}</h4>
+				<p class="list-group-item-text">{{course.description}}</p>
+			</a>
+		</div>
 	</div>
-  <div class="col-sm-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Course information</div>
-      <div class="panel-body">
-	<p><b>Pretending to know the system</b> <span class="label label-warning">Difficult</span></p>
-	<hr />
-	<p>This course does not correspond to one of the bogus courses in the list, simply because I currently don't know how to mark a course as active when it is clicked.</p>
-	<hr />
-	<p>You need at least 15 of 20 correct answers to pass this test.</p>
-	<hr />
-	<p>
-	  <div class="text-center">
-	    <div class="btn-group" role="group" aria-label="...">
-	      <button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
-	    </div>
-	  </div>
-	</p>
-      </div>
-    </div>
-    <div class="panel panel-default" ng-controller="UserInformationController" ng-show="isAdmin">
-      <div class="panel-heading">Administration</div>
-      <div class="panel-body">
-	<p>These are the actions that you, high priest of this system, may perform on a course.</p>
-	<hr />
-	<p>
-	  <div class="text-center">
-	    <div class="btn-group" role="group" aria-label="...">
-	      <button class="btn btn-primary" type="button" ng-click="createCourse()">Create</button>
-	      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
-	      <button class="btn btn-default" type="button">Review</button>
-	      <button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
-	    </div>
-	  </div>
-	</p>
-      </div>
-    </div>
-    
-  </div>
-  
-  <div class="modal fade" id="quiz_modal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-	<div class="modal-header">
-	  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	  <div class="page-header">
-	    <h1>Quiz editor <small>add and edit questions</small></h1>
-	  </div>
+	<div class="col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Course information</div>
+			<div class="panel-body">
+				<p><b>Pretending to know the system</b> <span class="label label-warning">Difficult</span></p>
+				<hr />
+				<p>This course does not correspond to one of the bogus courses in the list, simply because I currently don't know how to mark a course as active when it is clicked.</p>
+				<hr />
+				<p>You need at least 15 of 20 correct answers to pass this test.</p>
+				<hr />
+				<p>
+				<div class="text-center">
+					<div class="btn-group" role="group" aria-label="...">
+						<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+					</div>
+				</div>
+				</p>
+			</div>
+		</div>
+		<div class="panel panel-default" ng-controller="UserInformationController" ng-show="isAdmin">
+			<div class="panel-heading">Administration</div>
+			<div class="panel-body">
+				<p>These are the actions that you, high priest of this system, may perform on a course.</p>
+				<hr />
+				<p>
+				<div class="text-center">
+					<div class="btn-group" role="group" aria-label="...">
+						<button class="btn btn-primary" type="button" ng-click="createCourse()">Create</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
+						<button class="btn btn-default" type="button">Review</button>
+						<button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
+					</div>
+				</div>
+				</p>
+			</div>
+		</div>
+
 	</div>
-	<div class="modal-body" id="quiz-modal">
-	  <!-- Accordion-testing som ikke ga ønsket resultat-->
-	  <!--
+
+	<div class="modal fade" id="quiz_modal" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<div class="page-header">
+						<h1>Quiz editor <small>add and edit questions</small></h1>
+					</div>
+				</div>
+				<div class="modal-body" id="quiz-modal">
+					<!-- Accordion-testing som ikke ga ønsket resultat-->
+					<!--
 	  <div ng-controller="MyCtrl1">
-	    <accordion close-others="true">
-	      <accordion-group is-open="true">
+		<accordion close-others="true">
+		  <accordion-group is-open="true">
 		<accordion-heading>
 		  Lelelelelelele
 		</accordion-heading>
 		some content... <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-	      </accordion-group>
-	      <accordtion-group heading="lelelel">
-	      </accordtion-group>
-	    </accordion>
+		  </accordion-group>
+		  <accordtion-group heading="lelelel">
+		  </accordtion-group>
+		</accordion>
 	  </div> -->
 
-	  <!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
+					<!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
 
-	  <!-- Motivation panel -->
-	  <div class="panel panel-default">
-	    <div class="panel-heading" data-toggle="collapse" data-target="#motivation" data-parent="#quiz-modal">
-	      <h3 class="panel-title">Motivation</h3>
-	    </div>
-	    <div class="panel-body collapse" id="motivation">
-	      <textarea class="form-control" ng-model="modalVars.motivation" placeholder="The motivation of this course..."></textarea>
-	      <p>
-		<div class="btn-group pull-right" role="group" aria-label="...">
-		  <button class="btn btn-default" type="button" ng-click="buttonClick()">Discard</button>
-		  <button class="btn btn-primary" type="button">Apply</button>
-		</div>
-	      </p>
-	    </div>
-	  </div>		
-	  
-	  
-	  <!-- Step by step -->
-	  <div class="panel panel-default">
-	    <div class="panel-heading" data-toggle="collapse" data-target="#stepbystep" data-parent="#quiz-modal">
-	      <h3 class="panel-title">Step by step</h3>
-	    </div>
-	    <div class="panel-body collapse" id="stepbystep">
-	      <textarea class="form-control" ng-model="modalVars.stepbystep" placeholder="1. Step 1...."></textarea>
-	      <p>
-		<div class="btn-group pull-right" role="group" aria-label="...">
-		  <button class="btn btn-default" type="button">Discard</button>
-		  <button class="btn btn-primary" type="button">Apply</button>
-		</div>
-	      </p>
-	    </div>
-	  </div>
-	  
-	  <div class="panel panel-default">
-	    <div class="panel-body" id="quiz_edit">
-	      <div class="input-group">
-		<select class="form-control input-lg" id="quiz_questions">
-<!--		  <option>Rand McRand</option> -->
+					<!-- Motivation panel -->
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#motivation" data-parent="#quiz-modal">
+							<h3 class="panel-title">Motivation</h3>
+						</div>
+						<div class="panel-body collapse" id="motivation">
+							<textarea class="form-control" ng-model="modalVars.motivation" placeholder="The motivation of this course..."></textarea>
+						</div>
+					</div>		
 
-		    <option ng-repeat="(index, question) in modalVars.questions | orderBy : 'question'"
-				ng-click="questionClicked(index)">
-				{{question.question}}
-			</option>
-		</select>
-		<span class="input-group-addon">
-		   <button class="btn btn-sm btn-success" type="button">+</button>
-		</span>
-	      </div>
-	      
-	      <form role="form">
-		<h3 class="quiz_header">Who implemented</h3>
-		<p>
-		  <div class="input-group">
-		    <span class="input-group-addon">
-		      <input type="radio" name="qr">
-		    </span>
-		    <input type="text" class="form-control" ng-model="answers[0]">
-		  </div>
-		</p>
-		<p>
-		  <div class="input-group">
-		    <span class="input-group-addon">
-		      <input type="radio" name="qr">
-		    </span>
-		    <input type="text" class="form-control" ng-model="answers[1]">
-		  </div>
-		</p>
-		<p>
-		  <div class="input-group">
-		    <span class="input-group-addon">
-		      <input type="radio" name="qr">
-		    </span>
-		    <input type="text" class="form-control" ng-model="answers[2]">
-		  </div>
-		</p>
-	      </form>
-	    </div>
-	  </div>
-	  <!-- end of copy-paste -->
+
+					<!-- Step by step -->
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#stepbystep" data-parent="#quiz-modal">
+							<h3 class="panel-title">Step by step</h3>
+						</div>
+						<div class="panel-body collapse" id="stepbystep">
+							<textarea class="form-control" ng-model="modalVars.stepbystep" placeholder="1. Step 1...."></textarea>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-body" id="quiz_edit">
+							<div class="input-group">
+								<select class="form-control input-lg" id="quiz_questions">
+									<option ng-repeat="(index, question) in modalVars.questions | orderBy : 'question'"
+									ng-click="questionClicked(index)">
+									Question {{question.id}}
+									</option>
+								</select>
+								<span class="input-group-addon">
+									<button class="btn btn-sm btn-success" type="button">+</button>
+								</span>
+							</div>
+							<hr />
+							<form role="form">
+								<p>
+								<input type="text" class="form-control" ng-model="modalVars.questions[selectedQuestion].question"/>
+								</p>
+								<p>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" name="qr" value=0 ng-model="modalVars.questions[selectedQuestion].correct">
+									</span>
+									<input type="text" class="form-control" ng-model="answers[0]">
+								</div>
+								</p>
+								<p>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" name="qr" value=1 ng-model="modalVars.questions[selectedQuestion].correct">
+									</span>
+									<input type="text" class="form-control" ng-model="answers[1]">
+								</div>
+								</p>
+								<p>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" name="qr" value=2 ng-model="modalVars.questions[selectedQuestion].correct">
+									</span>
+									<input type="text" class="form-control" ng-model="answers[2]">
+								</div>
+								</p>
+							</form>
+						</div>
+					</div>
+					<!-- end of copy-paste -->
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+						<button class="btn btn-lg btn-default" type="button" ng-click="discardChanges()" data-dismiss="modal">Discard</button>
+						<button class="btn btn-lg btn-primary" type="button" ng-click="saveChanges()" data-dismiss="modal">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="modal-footer">
-	  <div class="btn-group pull-right" role="group" aria-label="...">
-	    <button class="btn btn-lg btn-default" type="button" data-dismiss="modal">Discard</button>
-	    <button class="btn btn-lg btn-primary" type="button">Save</button>
-	  </div>
-	</div>
-	</div>
-    </div>
-  </div>
 </div>
-  
+
 
 <!-- Angular UI Accordion 
-     .js-filen ligger i js/ mappa-->
+	 .js-filen ligger i js/ mappa-->
