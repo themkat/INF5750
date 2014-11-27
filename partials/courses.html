@@ -1,10 +1,9 @@
 <div class="page-header" ng-controller="UserInformationController" ng-show="isAdmin">
-	<h1>Courses <small>overview</small></h1>
+	<h1>Information <small>statistics</small></h1>
 </div>
 <!-- 
 	 TODO:
-	 - klikk på tekster for å få opp redigeringsinfo.
-	 - legg til sidemeny hvor man kan se info om course man har trykket på
+	- add side menu with information about the currently selected course
   -->
 <div class="row" ng-controller="UserInformationController" ng-show="isAdmin">
 	<div class="col-sm-8">
@@ -35,8 +34,10 @@
 		</div>
 	</div>
 </div>
+
+
 <div class="page-header">
-	<h1>Administration <small>manage courses</small></h1>
+	<h1>Courses <small>overview</small></h1>
 </div>
 <div class="row">
 	<div class="col-sm-8" id="quiz-list">
@@ -47,23 +48,99 @@
 			<a ng-repeat="course in courses | orderBy : 'name'" 
 
 				class="list-group-item"
-				ng-class="{active: selectedCourseIndex === course.id}"
-				ng-click="itemClicked(course.id)">
+				ng-class="{active: selectedCourseId === course.id}"
+				ng-click="courseClicked(course.id)">
 
-				<h4 class="list-group-item-heading">{{course.name}}</h4>
+				<h4 class="list-group-item-heading">{{course.name}}
+				<span class="label label-success pull-right" ng-show="coursePassed(course)">Passed</span></h4>
 				<p class="list-group-item-text">{{course.description}}</p>
 			</a>
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">Course information</div>
+		<div class="panel panel-default" ng-controller="UserInformationController" ng-show="isAdmin">
+			<div class="panel-heading">Administration</div>
 			<div class="panel-body">
-				<p><b>Pretending to know the system</b> <span class="label label-warning">Difficult</span></p>
+				<p>These are the actions that you, high priest of this system, may perform on a module.</p>
 				<hr />
-				<p>This course does not correspond to one of the bogus courses in the list, simply because I currently don't know how to mark a course as active when it is clicked.</p>
+				<p>
+				<div class="text-center">
+					<div class="btn-group" role="group" aria-label="...">
+						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#course_modal" ng-click="createCourse()">Create</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#course_modal">Edit</button>
+						<button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
+					</div>
+				</div>
+				</p>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal fade" id="course_modal" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<div class="page-header">
+						<h1>Course editor <small>add and edit questions</small></h1>
+					</div>
+				</div>
+				<div class="modal-body" id="course-modal">
+					<p>
+					<div class="input-group primary">
+						<span class="input-group-addon">Course name</span>
+						<input type="text" class="form-control" ng-model="modalCourse.name" />
+					</div>
+					</p>
+
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#course-description" data-parent="#course-modal">
+							<h3 class="panel-title">Description</h3>
+						</div>
+						<div class="panel-body collapse" id="course-description">
+							<textarea class="form-control" ng-model="modalCourse.description" placeholder="Description goes here."></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+						<button class="btn btn-lg btn-default" type="button" ng-click="discardChanges()" data-dismiss="modal">Discard</button>
+						<button class="btn btn-lg btn-primary" type="button" ng-click="saveChanges()" data-dismiss="modal">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="page-header" ng-show="selectedCourseId">
+	<h1>Modules <small>overview</small></h1>
+</div>
+<div class="row" ng-show="selectedCourseId">
+	<div class="col-sm-8" id="quiz-list">
+		<div class="list-group">
+			<a ng-repeat="module in modules | orderBy : 'name'" 
+
+				class="list-group-item"
+				ng-class="{active: selectedModuleId === module.id}"
+				ng-click="moduleClicked(module.id)">
+
+				<h4 class="list-group-item-heading">{{module.name}}
+				<span class="label label-success pull-right" ng-show="modulePassed(module)">Passed</span>
+				</h4>
+				<p class="list-group-item-text">{{module.description}}</p>
+			</a>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default" ng-show="selectedModuleId">
+			<div class="panel-heading">Module information</div>
+			<div class="panel-body">
+				<p><b>{{getModuleName()}}</b></p>
 				<hr />
-				<p>You need at least 15 of 20 correct answers to pass this test.</p>
+				<p>{{getModuleMotivation()}}</p>
 				<hr />
 				<p>
 				<div class="text-center">
@@ -77,15 +154,15 @@
 		<div class="panel panel-default" ng-controller="UserInformationController" ng-show="isAdmin">
 			<div class="panel-heading">Administration</div>
 			<div class="panel-body">
-				<p>These are the actions that you, high priest of this system, may perform on a course.</p>
+				<p>These are the actions that you, high priest of this system, may perform on a module.</p>
 				<hr />
 				<p>
 				<div class="text-center">
 					<div class="btn-group" role="group" aria-label="...">
-						<button class="btn btn-primary" type="button" ng-click="createCourse()">Create</button>
+						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#quiz_modal" ng-click="createModule()">Create</button>
 						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
 						<button class="btn btn-default" type="button">Review</button>
-						<button class="btn btn-default" type="button" ng-click="deleteCourse()">Delete</button>
+						<button class="btn btn-default" type="button" ng-click="deleteModule()">Delete</button>
 					</div>
 				</div>
 				</p>
@@ -123,11 +200,12 @@
 					<!-- Name -->
 					<p>
 					<div class="input-group primary">
-						<span class="input-group-addon">Course name</span>
+						<span class="input-group-addon">Module name</span>
 						<input type="text" class="form-control" ng-model="modalVars.name" required="true" />
 					</div>
 					</p>
 
+					<!-- Description panel -->
 					<div class="panel panel-default">
 						<div class="panel-heading" data-toggle="collapse" data-target="#description" data-parent="#quiz-modal">
 							<h3 class="panel-title">Description</h3>
@@ -143,7 +221,7 @@
 							<h3 class="panel-title">Motivation</h3>
 						</div>
 						<div class="panel-body collapse" id="motivation">
-							<textarea class="form-control" ng-model="modalVars.motivation" placeholder="The motivation of this course..."></textarea>
+							<textarea class="form-control" ng-model="modalVars.motivation" placeholder="The motivation of this module..."></textarea>
 						</div>
 					</div>		
 
