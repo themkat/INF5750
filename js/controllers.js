@@ -171,8 +171,14 @@ angular.module('myApp.controllers', []).
 				return;
 			}
 			$scope.modalVars.questions.remove($scope.selectedQuestion);
+			
+			for (var i = 0; i < $scope.modalVars.questions.length; i++) {
+				$scope.modalVars.questions[i].id = i + 1;
+			}
+			
 			$scope.selectedQuestion = 0;
 			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
+
 		}
 
 		// Populate list of courses with data from the server
