@@ -349,9 +349,9 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="panel panel-default">
-								<div class="panel-body">	
-									<form role="form">
-										<h2>{{getCurrentQuestion().question}}</h2>
+								<div class="panel-body">
+									<form role="form" ng-show="!modalFinished">
+										<h2>{{currentQuestionId+1}}/{{numQuestions}} - {{getCurrentQuestion().question}}</h2>
 										<p ng-repeat="answer in getCurrentQuestion().answers">
 											<input type="radio" name="quiz_taker_radio">
 											<p>{{answer}}</p>
@@ -364,9 +364,9 @@
 
 									<div class="btn-group pull-right" role="group" aria-label="...">
 										<button class="btn btn-default" ng-click="prevQuestion()"
-											ng-class="{disabled: currentQuestionId === 0}">Prievous</button>
+											ng-class="{disabled: currentQuestionId === 0 || modalFinished}">Prievous</button>
 										<button class="btn btn-default" ng-click="nextQuestion()"
-											ng-class="{disabled: currentQuestionId > numQuestions}">Next</button>
+											ng-class="{disabled: currentQuestionId > numQuestions || modalFinished}">Next</button>
 									</div>
 								</div>
 							</div>
