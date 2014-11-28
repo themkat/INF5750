@@ -353,9 +353,9 @@
 									<form role="form" ng-show="!modalFinished">
 										<h2>{{currentQuestionId+1}}/{{numQuestions}} - {{getCurrentQuestion().question}}</h2>
 										<p ng-repeat="answer in getCurrentQuestion().answers">
-											<input type="radio" name="quiz_taker_radio">
+											<input type="radio" name="quiz_taker_radio"></input>
 											<p>{{answer}}</p>
-											<!-- Noen spesiell grunn til at dette ikke virker? -->
+											<!-- Noen spesiell grunn til at dette ikke virker? jeg har prøvd alt nå. -->
 										</p>
 									</form>
 

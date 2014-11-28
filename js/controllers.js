@@ -198,6 +198,7 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 		}
 
+
 		// få akkurat det spørsmålet vi er på nå
 		$scope.getCurrentQuestion = function() {
 			var module = $scope.modules[$scope.moduleIdToIndex()];
