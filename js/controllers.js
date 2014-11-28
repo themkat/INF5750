@@ -176,6 +176,7 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		// variable  og funksjoner knyttet til å ta en quiz
 		// for å starte en modal og cleare tidligere data.
 		// (sorry om det er litt rotete)
+		$scope.modalFinished = false;
 		$scope.startModal = function() {
 			var module = $scope.modules[$scope.moduleIdToIndex()];
 
@@ -191,6 +192,9 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		$scope.nextQuestion = function() {
 			if($scope.currentQuestionId < $scope.numQuestions) {
 				$scope.currentQuestionId++;
+			}
+			if($scope.currentQuestionId == $scope.numQuestions) {
+				$scope.modalFinished = true;
 			}
 		}
 

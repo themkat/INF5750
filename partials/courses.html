@@ -358,10 +358,15 @@
 											<!-- Noen spesiell grunn til at dette ikke virker? -->
 										</p>
 									</form>
+
+									<!-- En liten tekst som viser oss at vi er ferdige  -->
+									<p ng-show="modalFinished">U r a faget</p>
+
 									<div class="btn-group pull-right" role="group" aria-label="...">
 										<button class="btn btn-default" ng-click="prevQuestion()"
 											ng-class="{disabled: currentQuestionId === 0}">Prievous</button>
-										<button class="btn btn-default" ng-click="nextQuestion()">Next</button>
+										<button class="btn btn-default" ng-click="nextQuestion()"
+											ng-class="{disabled: currentQuestionId > numQuestions}">Next</button>
 									</div>
 								</div>
 							</div>
