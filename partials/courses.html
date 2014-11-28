@@ -297,6 +297,66 @@
 			</div>
 		</div>
 	</div>
+
+
+
+	<!-- Quiz-taker modal (ganske lik editoren, men med noen små forskjeller -->	
+	<!--TODO: fiks opp i "angular"-variablene slik at de er riktige -->
+	<div class="modal fade" id="quiz_taker" role="dialog" aria-hidden="true">	
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">					
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<div class="page-header">
+						<h1> {{getModuleName()}}</h1>
+					</div>
+				</div>
+				<div class="modal-body">	
+					<!-- Description panel -->
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#description" data-parent="#quiz-modal">
+							<h3 class="panel-title">Description</h3>
+						</div>
+						<div class="panel-body collapse" id="description">
+							<p>{{descriptionVariable}}</p>
+						</div>
+					</div>
+
+					<!-- Motivation panel -->
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#motivation" data-parent="#quiz-modal">
+							<h3 class="panel-title">Motivation</h3>
+						</div>
+						<div class="panel-body collapse" id="motivation">
+							<p>{{getModuleMotivation()}}</p>	
+						</div>
+					</div>		
+
+
+					<!-- Step by step -->
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-target="#stepbystep" data-parent="#quiz-modal">
+							<h3 class="panel-title">Step by step</h3>
+						</div>
+						<div class="panel-body collapse" id="stepbystep">
+							<p>{{getModuleStepByStep}}</p>	
+						</div>
+					</div>
+
+					<!-- Selve visningen av spørsmålene -->
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<!-- TODO: legg inn innholdet -->
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+						<button class="btn btn-lg btn-default" type="button" ng-click="" data-dismiss="modal">Abort</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
