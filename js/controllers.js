@@ -88,7 +88,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 
 			$scope.selectedCourseId = 0;
 			$scope.selectedQuestion = 0;
-			$scope.answers = [];
 			$scope.modalVars = null;
 		}
 
@@ -256,7 +255,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 
 			$scope.selectedModuleId = 0;
 			$scope.selectedQuestion = 0;
-			$scope.answers = [];
 			$scope.modalVars = null;
 			$scope.maxModuleId();
 		}
@@ -279,7 +277,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 
 		$scope.questionClicked = function(id) {
 			$scope.selectedQuestion = id;
-			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 		}
 
 		// Find the highest ID among modules
@@ -298,8 +295,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		$scope.modalVars = null;
 		/* Index of question currently being edited */
 		$scope.selectedQuestion = 0;
-		/* Array of answers to the current question */
-		$scope.answers = [];
 
 		// Send the list of courses, modules and questions to the server
 		$scope.saveChanges = function() {
@@ -322,7 +317,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			var index = $scope.moduleIdToIndex();
 			$scope.modalVars = $scope.modules[index];
 			$scope.selectedQuestion = 0;
-			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 		}
 
 		// Add a question to a module. Called when clicking the + button
@@ -363,7 +357,6 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 
 			$scope.selectedQuestion = 0;
-			$scope.answers = $scope.modalVars.questions[$scope.selectedQuestion].answers;
 
 		}
 
