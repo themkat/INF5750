@@ -145,7 +145,7 @@
 				<p>
 				<div class="text-center">
 					<div class="btn-group" role="group" aria-label="...">
-						<button class="btn btn-default" type="button" ng-click="changeView('quiz')">Answer</button>
+						<button class="btn btn-default" type="button" ng-click="changeView('quiz')" data-toggle="modal" data-target="#quiz_taker">Answer</button>
 					</div>
 				</div>
 				</p>
@@ -302,6 +302,7 @@
 
 	<!-- Quiz-taker modal (ganske lik editoren, men med noen små forskjeller -->	
 	<!--TODO: fiks opp i "angular"-variablene slik at de er riktige -->
+	<!--  -->
 	<div class="modal fade" id="quiz_taker" role="dialog" aria-hidden="true">	
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -311,42 +312,60 @@
 						<h1> {{getModuleName()}}</h1>
 					</div>
 				</div>
-				<div class="modal-body">	
+				<div class="modal-body" id="quiz_taker_body">	
 					<!-- Description panel -->
 					<div class="panel panel-default">
-						<div class="panel-heading" data-toggle="collapse" data-target="#description" data-parent="#quiz-modal">
+						<div class="panel-heading" data-toggle="collapse" data-target="#mod_des" data-parent="#quiz_taker_body">
 							<h3 class="panel-title">Description</h3>
 						</div>
-						<div class="panel-body collapse" id="description">
-							<p>{{descriptionVariable}}</p>
+						<div class="panel-body collapse" id="mod_des">
+							<p>{{modules[selectedModuleId].description}}</p>
 						</div>
 					</div>
 
 					<!-- Motivation panel -->
 					<div class="panel panel-default">
-						<div class="panel-heading" data-toggle="collapse" data-target="#motivation" data-parent="#quiz-modal">
+						<div class="panel-heading" data-toggle="collapse" data-target="#mod_mot" data-parent="#quiz_taker_body">
 							<h3 class="panel-title">Motivation</h3>
 						</div>
-						<div class="panel-body collapse" id="motivation">
-							<p>{{getModuleMotivation()}}</p>	
+						<div class="panel-body collapse" id="mod_mot">
+							<p>{{modules[selectedModuleId].motivation}}</p>	
 						</div>
 					</div>		
 
 
 					<!-- Step by step -->
 					<div class="panel panel-default">
-						<div class="panel-heading" data-toggle="collapse" data-target="#stepbystep" data-parent="#quiz-modal">
+						<div class="panel-heading" data-toggle="collapse" data-target="#mod_sbs" data-parent="#quiz_taker_body">
 							<h3 class="panel-title">Step by step</h3>
 						</div>
-						<div class="panel-body collapse" id="stepbystep">
-							<p>{{getModuleStepByStep}}</p>	
+						<div class="panel-body collapse" id="mod_sbs">
+							<p>{{modules[selectedModuleId].stepbystep}}</p>
 						</div>
 					</div>
 
 					<!-- Selve visningen av spørsmålene -->
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<!-- TODO: legg inn innholdet -->
+							<div class="panel panel-default">
+								<div class="panel-body">	
+									<div ng-repeat="question in modules[selectedModuleId].questions">
+										<!-- Todo: ng-show med currentQuestion -->
+										<form role="form">
+											<h2>{{question.question}}</h2>
+											<p ng-repeat="answer in question.answers">
+												<input type="radio" name="quiz_taker_radio">
+												<p>{{answer}}</p>
+												<!-- Noen spesiell grunn til at dette ikke virker? -->
+											</p>
+										</form>
+										<div class="btn-group pull-right" role="group" aria-label="...">
+											<button class="btn btn-default">Prievous</button>
+											<button class="btn btn-default">Next</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
