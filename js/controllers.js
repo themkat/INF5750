@@ -148,6 +148,31 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 		}
 
+		// getting the module description and stepbystep
+		$scope.getModuleDescription = function() {
+			if($scope.selectedModuleId === 0) {
+				return "";
+			}
+			var module = $scope.modules[$scope.moduleIdToIndex()];
+			if(module.description === "") {
+				return "No description written.";
+			} else {
+				return module.description;
+			}
+		}
+
+		$scope.getModuleStepbystep = function() {	
+			if($scope.selectedModuleId === 0) {
+				return "";
+			}
+			var module = $scope.modules[$scope.moduleIdToIndex()];
+			if(module.stepbystep === "") {
+				return "No step by step-guide written.";
+			} else {
+				return module.stepbystep;
+			}
+		}
+
 		// Add a new module to the list with a default name and id
 		$scope.createModule = function() {
 
