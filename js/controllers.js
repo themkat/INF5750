@@ -179,6 +179,7 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		$scope.startModal = function() {
 			var module = $scope.modules[$scope.moduleIdToIndex()];
 
+			$scope.modalFinished = false;
 			$scope.currentQuestionId = 0;
 			$scope.numQuestions = module.questions.length;
 		}
