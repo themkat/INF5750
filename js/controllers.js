@@ -173,6 +173,34 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 		}
 
+		// variable  og funksjoner knyttet til å ta en quiz
+		// for å starte en modal og cleare tidligere data.
+		// (sorry om det er litt rotete)
+		$scope.startModal = function() {
+			var module = $scope.modules[$scope.moduleIdToIndex()];
+
+			$scope.currentQuestionId = 0;
+			$scope.numQuestions = module.questions.length;
+		}
+
+		$scope.prevQuestion = function() {
+			if($scope.currentQuestionId > 0) {
+				$scope.currentQuestionId--;
+			}
+		}
+		$scope.nextQuestion = function() {
+			if($scope.currentQuestionId < $scope.numQuestions) {
+				$scope.currentQuestionId++;
+			}
+		}
+
+		// få akkurat det spørsmålet vi er på nå
+		$scope.getCurrentQuestion = function() {
+			var module = $scope.modules[$scope.moduleIdToIndex()];
+			return module.questions[$scope.currentQuestionId];
+		}
+
+
 		// Add a new module to the list with a default name and id
 		$scope.createModule = function() {
 

@@ -145,7 +145,7 @@
 				<p>
 				<div class="text-center">
 					<div class="btn-group" role="group" aria-label="...">
-						<button class="btn btn-default" type="button" ng-click="changeView('quiz')" data-toggle="modal" data-target="#quiz_taker">Answer</button>
+						<button class="btn btn-default" type="button" ng-click="startModal()" data-toggle="modal" data-target="#quiz_taker">Answer</button>
 					</div>
 				</div>
 				</p>
@@ -345,24 +345,23 @@
 					</div>
 
 					<!-- Selve visningen av spørsmålene -->
+					<!-- TODO: en 'du har nå fullført quizen'-melding -->
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="panel panel-default">
 								<div class="panel-body">	
-									<div ng-repeat="question in modules[selectedModuleId].questions">
-										<!-- Todo: ng-show med currentQuestion -->
-										<form role="form">
-											<h2>{{question.question}}</h2>
-											<p ng-repeat="answer in question.answers">
-												<input type="radio" name="quiz_taker_radio">
-												<p>{{answer}}</p>
-												<!-- Noen spesiell grunn til at dette ikke virker? -->
-											</p>
-										</form>
-										<div class="btn-group pull-right" role="group" aria-label="...">
-											<button class="btn btn-default">Prievous</button>
-											<button class="btn btn-default">Next</button>
-										</div>
+									<form role="form">
+										<h2>{{getCurrentQuestion().question}}</h2>
+										<p ng-repeat="answer in getCurrentQuestion().answers">
+											<input type="radio" name="quiz_taker_radio">
+											<p>{{answer}}</p>
+											<!-- Noen spesiell grunn til at dette ikke virker? -->
+										</p>
+									</form>
+									<div class="btn-group pull-right" role="group" aria-label="...">
+										<button class="btn btn-default" ng-click="prevQuestion()"
+											ng-class="{disabled: currentQuestionId === 0}">Prievous</button>
+										<button class="btn btn-default" ng-click="nextQuestion()">Next</button>
 									</div>
 								</div>
 							</div>
