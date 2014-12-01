@@ -345,22 +345,33 @@
 					</div>
 
 					<!-- Selve visningen av spørsmålene -->
-					<!-- TODO: en 'du har nå fullført quizen'-melding -->
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<form role="form" ng-show="!modalFinished">
 										<h2>{{currentQuestionId+1}}/{{numQuestions}} - {{getCurrentQuestion().question}}</h2>
-										<p ng-repeat="answer in getCurrentQuestion().answers">
-											<input type="radio" name="quiz_taker_radio"></input>
-											<p>{{answer}}</p>
-											<!-- Noen spesiell grunn til at dette ikke virker? jeg har prøvd alt nå. -->
-										</p>
+									
+										<!-- Dynamisk antall spørsmål 
+											 virker ikke. Dermed har jeg
+											 hardkodet inn 3 alternativer
+											 for å ikke kaste bort mer tid.-->	
+										<div class="form-group">
+											<input type="radio" id="quiz_ans1" name="quiz_taker_radio">
+											<label for="quiz_ans1">{{getCurrentQuestion().answers[0]}}</label>
+										</div>
+										<div class="form-group">
+											<input type="radio" id="quiz_ans2" name="quiz_taker_radio">
+											<label for="quiz_ans2">{{getCurrentQuestion().answers[1]}}</label>
+										</div>
+										<div class="form-group">
+											<input type="radio" id="quiz_ans3" name="quiz_taker_radio">
+											<label for="quiz_ans3">{{getCurrentQuestion().answers[2]}}</label>
+										</div>
 									</form>
 
 									<!-- En liten tekst som viser oss at vi er ferdige  -->
-									<p ng-show="modalFinished">U r a faget</p>
+									<p ng-show="modalFinished">Congrats! You finished the quiz! TODO: actually show statistics</p>
 
 									<div class="btn-group pull-right" role="group" aria-label="...">
 										<button class="btn btn-default" ng-click="prevQuestion()"
