@@ -377,8 +377,8 @@
 									<!-- En liten tekst som viser oss at vi er ferdige  -->
 									<div ng-show="modalFinished">
 										<p>{{numCorrect}} of {{numQuestions}} correct</p>
-										<p ng-show="quizPassed()">You passed this module! Congratulations!</p>
-										<p ng-show="!quizPassed()">You failed this module :( Maybe you should try again.</p>
+										<p ng-show="passedQuiz()">You passed this module! Congratulations!</p>
+										<p ng-show="!passedQuiz()">You failed this module :( Maybe you should try again.</p>
 									</div>
 
 									<div class="btn-group pull-right" role="group" aria-label="...">

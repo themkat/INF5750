@@ -194,16 +194,17 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 				$scope.currentQuestionId--;
 			}
 		}
-		$scope.nextQuestion = function() {
+		$scope.nextQuestion = function() {	
+			//check if the current question is correct before moving on
+			// very hit and miss :(
+			var curQuestion = $scope.modules[$scope.moduleIdToIndex()].questions[$scope.currentQuestionId];
+			if($scope.selectedAnswer == curQuestion.correct) {
+				$scope.numCorrect++; 
+			}	
+
+
 			if($scope.currentQuestionId+1 < $scope.numQuestions) {
 				$scope.currentQuestionId++;
-
-				//check if the current question is correct before moving on
-				// very hit and miss :(
-				var curQuestion = $scope.modules[$scope.moduleIdToIndex()].questions[$scope.currentQuestionId];
-				if($scope.selectedAnswer == curQuestion.correct) {
-					$scope.numCorrect++; 
-				}	
 				$scope.selectedAnswer = -1; // don't autoselect a radio-btn
 			}
 			else {
@@ -219,9 +220,15 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 
 		// variabel for antall riktige spørsmål
 		$scope.numCorrect = 0;
+
+		// sjekker om vi har nok riktige svar til å bestå quizen
+		// (er midlertidig bare satt til alt riktig. 3/4 riktig er 
+		//  også en mulighet)
 		$scope.passedQuiz = function() {
-			return $scope.numCorrect === $scope.numQuestions;
+			return $scope.numCorrect == $scope.numQuestions;
 		}
+		// hvordan skal vi lagre en id i passed? er det mulig med den næværende
+		// strukturen å bare lagre en slik verdi? eller må vi sende hele quizen?
 
 
 		// Add a new module to the list with a default name and id
