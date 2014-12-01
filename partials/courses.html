@@ -357,21 +357,29 @@
 											 hardkodet inn 3 alternativer
 											 for å ikke kaste bort mer tid.-->	
 										<div class="form-group">
-											<input type="radio" id="quiz_ans1" name="quiz_taker_radio">
+											<input type="radio" value="0" id="quiz_ans1" name="quiz_taker_radio" ng-model="selectedAnswer">
 											<label for="quiz_ans1">{{getCurrentQuestion().answers[0]}}</label>
 										</div>
 										<div class="form-group">
-											<input type="radio" id="quiz_ans2" name="quiz_taker_radio">
+											<input type="radio" value="1" id="quiz_ans2" name="quiz_taker_radio" ng-model="selectedAnswer">
 											<label for="quiz_ans2">{{getCurrentQuestion().answers[1]}}</label>
 										</div>
 										<div class="form-group">
-											<input type="radio" id="quiz_ans3" name="quiz_taker_radio">
+											<input type="radio" value="2" id="quiz_ans3" name="quiz_taker_radio" ng-model="selectedAnswer">
 											<label for="quiz_ans3">{{getCurrentQuestion().answers[2]}}</label>
 										</div>
+
+										<!-- Debug for å sjekke at variable faktisk fungerer -->
+										<p>Current selection: {{selectedAnswer}}. Correct answer: {{getCurrentQuestion().correct}}</p>
+										<p>Num Correct: {{numCorrect}}</p>
 									</form>
 
 									<!-- En liten tekst som viser oss at vi er ferdige  -->
-									<p ng-show="modalFinished">Congrats! You finished the quiz! TODO: actually show statistics</p>
+									<div ng-show="modalFinished">
+										<p>{{numCorrect}} of {{numQuestions}} correct</p>
+										<p ng-show="quizPassed()">You passed this module! Congratulations!</p>
+										<p ng-show="!quizPassed()">You failed this module :( Maybe you should try again.</p>
+									</div>
 
 									<div class="btn-group pull-right" role="group" aria-label="...">
 										<button class="btn btn-default" ng-click="prevQuestion()"

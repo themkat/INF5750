@@ -182,27 +182,45 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			$scope.modalFinished = false;
 			$scope.currentQuestionId = 0;
 			$scope.numQuestions = module.questions.length;
+			$scope.selectedAnswer = -1;
+			$scope.numCorrect = 0;
 		}
 
+		$scope.selectedAnswer = -1;
+
+		// fjerner vi prievous blir det lettere å sjekke om et spørsmål er riktig.
 		$scope.prevQuestion = function() {
 			if($scope.currentQuestionId > 0) {
 				$scope.currentQuestionId--;
 			}
 		}
 		$scope.nextQuestion = function() {
-			if($scope.currentQuestionId < $scope.numQuestions) {
+			if($scope.currentQuestionId+1 < $scope.numQuestions) {
 				$scope.currentQuestionId++;
+
+				//check if the current question is correct before moving on
+				// very hit and miss :(
+				var curQuestion = $scope.modules[$scope.moduleIdToIndex()].questions[$scope.currentQuestionId];
+				if($scope.selectedAnswer == curQuestion.correct) {
+					$scope.numCorrect++; 
+				}	
+				$scope.selectedAnswer = -1; // don't autoselect a radio-btn
 			}
-			if($scope.currentQuestionId == $scope.numQuestions) {
+			else {
 				$scope.modalFinished = true;
 			}
 		}
-
 
 		// få akkurat det spørsmålet vi er på nå
 		$scope.getCurrentQuestion = function() {
 			var module = $scope.modules[$scope.moduleIdToIndex()];
 			return module.questions[$scope.currentQuestionId];
+		}
+
+		// variabel for antall riktige spørsmål
+		$scope.numCorrect = 0;
+		$scope.passedQuiz = function() {
+			return $scope.numCorrect === $scope.numQuestions;
 		}
 
 
