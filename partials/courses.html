@@ -126,7 +126,7 @@
 				class="list-group-item"
 				ng-class="{active: selectedModuleId === module.id}"
 				ng-click="moduleClicked(module.id)">
-
+				
 				<h4 class="list-group-item-heading">{{module.name}}
 				<span class="label label-success pull-right" ng-show="modulePassed(module)">Passed</span>
 				</h4>
@@ -140,7 +140,7 @@
 			<div class="panel-body">
 				<p><b>{{getModuleName()}}</b></p>
 				<hr />
-				<p>{{getModuleMotivation()}}</p>
+				<p ng-bind-html="getModuleMotivation()"></p>
 				<hr />
 				<p>
 				<div class="text-center">
@@ -181,20 +181,6 @@
 					</div>
 				</div>
 				<div class="modal-body" id="quiz-modal">
-					<!-- Accordion-testing som ikke ga ønsket resultat-->
-					<!--
-	  <div ng-controller="MyCtrl1">
-		<accordion close-others="true">
-		  <accordion-group is-open="true">
-		<accordion-heading>
-		  Lelelelelelele
-		</accordion-heading>
-		some content... <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-		  </accordion-group>
-		  <accordtion-group heading="lelelel">
-		  </accordtion-group>
-		</accordion>
-	  </div> -->
 
 					<!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
 					<!-- Name -->
@@ -235,6 +221,11 @@
 							<textarea class="form-control" ng-model="modalVars.stepbystep" placeholder="1. Step 1...."></textarea>
 						</div>
 					</div>
+				
+					Correct answers required:
+					<select class="form-control input-lg" id="required_answers">
+						<option ng-repeat="n in questionRange" ng-model="modalVars.requiredAnswers" ng-click="answerNumberClicked(n)">{{n}}</option>
+					</select>
 
 					<div class="panel panel-default">
 						<div class="panel-body" id="quiz_edit">
@@ -327,7 +318,7 @@
 							<h3 class="panel-title">Motivation</h3>
 						</div>
 						<div class="panel-body collapse" id="mod_mot">
-							<p>{{getModuleMotivation()}}</p>	
+							<p ng-bind-html="getModuleMotivation()"></p>	
 						</div>
 					</div>		
 
@@ -338,7 +329,7 @@
 							<h3 class="panel-title">Step by step</h3>
 						</div>
 						<div class="panel-body collapse" id="mod_sbs">
-							<p>{{getModuleStepbystep()}}</p>
+							<p ng-bind-html="getModuleStepbystep()"></p>
 						</div>
 					</div>
 
@@ -348,12 +339,8 @@
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<form role="form" ng-show="!modalFinished">
-										<h2>{{currentQuestionId+1}}/{{numQuestions}} - {{getCurrentQuestion().question}}</h2>
+										<h2>{{printProgress()}}</h2>
 									
-										<!-- Dynamisk antall spørsmål 
-											 virker ikke. Dermed har jeg
-											 hardkodet inn 3 alternativer
-											 for å ikke kaste bort mer tid.-->	
 										<div class="form-group">
 											<input type="radio" value="0" id="quiz_ans1" name="quiz_taker_radio" ng-model="selectedAnswer">
 											<label for="quiz_ans1">{{getCurrentQuestion().answers[0]}}</label>
@@ -388,7 +375,7 @@
 				</div>
 				<div class="modal-footer">
 					<div class="btn-group pull-right" role="group" aria-label="...">
-						<button class="btn btn-lg btn-default" type="button" ng-click="" data-dismiss="modal">Abort</button>
+						<button class="btn btn-lg btn-default" type="button" ng-click="" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>

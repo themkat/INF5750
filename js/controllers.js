@@ -14,8 +14,8 @@ See: https://docs.angularjs.org/api/ngResource/service/$resource for info
 */
 
 angular.module('myApp.controllers', []).
-controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseService', 'CourseInfo',
-		function ($scope, $http, UserInformationService, CourseService, CourseInfo) {
+controller('CoursesCtrl', ['$scope', '$http', '$sce', 'UserInformationService', 'CourseService', 'CourseInfo',
+		function ($scope, $http, $sce, UserInformationService, CourseService, CourseInfo) {
 
 		/* Array of courses */
 		$scope.courses  = [];
@@ -143,7 +143,7 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			if (module.motivation == "") {
 				return "No motivation written.";
 			} else {
-				return module.motivation;
+				return $sce.trustAsHtml(module.motivation);
 			}
 		}
 
@@ -168,7 +168,7 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			if(module.stepbystep === "") {
 				return "No step by step-guide written.";
 			} else {
-				return module.stepbystep;
+				return $sce.trustAsHtml(module.stepbystep);
 			}
 		}
 
@@ -176,17 +176,20 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		// for å starte en modal og cleare tidligere data.
 		// (sorry om det er litt rotete)
 		$scope.modalFinished = false;
+		$scope.currentQuestionId = 0;
+		$scope.numQuestions = 0;
+		$scope.numCorrect = 0;
+		$scope.selectedAnswer = -1;
+
 		$scope.startModal = function() {
-			var module = $scope.modules[$scope.moduleIdToIndex()];
+			$scope.populateEditTable();
 
 			$scope.modalFinished = false;
 			$scope.currentQuestionId = 0;
-			$scope.numQuestions = module.questions.length;
+			$scope.numQuestions = $scope.modalVars.questions.length;
 			$scope.selectedAnswer = -1;
 			$scope.numCorrect = 0;
 		}
-
-		$scope.selectedAnswer = -1;
 
 		// fjerner vi prievous blir det lettere å sjekke om et spørsmål er riktig.
 		$scope.prevQuestion = function() {
@@ -194,16 +197,17 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 				$scope.currentQuestionId--;
 			}
 		}
+
 		$scope.nextQuestion = function() {	
 			//check if the current question is correct before moving on
 			// very hit and miss :(
-			var curQuestion = $scope.modules[$scope.moduleIdToIndex()].questions[$scope.currentQuestionId];
+			var curQuestion = $scope.modalVars.questions[$scope.currentQuestionId];
 			if($scope.selectedAnswer == curQuestion.correct) {
 				$scope.numCorrect++; 
 			}	
 
 
-			if($scope.currentQuestionId+1 < $scope.numQuestions) {
+			if($scope.currentQuestionId+1 < $scope.modalVars.questions.length) {
 				$scope.currentQuestionId++;
 				$scope.selectedAnswer = -1; // don't autoselect a radio-btn
 			}
@@ -214,8 +218,11 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 
 		// få akkurat det spørsmålet vi er på nå
 		$scope.getCurrentQuestion = function() {
-			var module = $scope.modules[$scope.moduleIdToIndex()];
-			return module.questions[$scope.currentQuestionId];
+			//var module = $scope.modules[$scope.moduleIdToIndex()];
+			if ($scope.modalVars == null) {
+				return { question: "Bloop?", answers: [0, 0, 0] };
+			}
+			return $scope.modalVars.questions[$scope.currentQuestionId];
 		}
 
 		// variabel for antall riktige spørsmål
@@ -225,7 +232,16 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		// (er midlertidig bare satt til alt riktig. 3/4 riktig er 
 		//  også en mulighet)
 		$scope.passedQuiz = function() {
-			return $scope.numCorrect == $scope.numQuestions;
+			if ($scope.modalVars == null) {
+				return;
+			}
+			
+			var passed = $scope.numCorrect >= $scope.modalVars.requiredAnswers;
+
+			if (passed && -1 == $scope.modalVars.passed.indexOf($scope.userId)) {
+				$scope.modalVars.passed.push($scope.userId);
+			}
+			return $scope.numCorrect >= $scope.modalVars.requiredAnswers;
 		}
 		// hvordan skal vi lagre en id i passed? er det mulig med den næværende
 		// strukturen å bare lagre en slik verdi? eller må vi sende hele quizen?
@@ -246,18 +262,19 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 				'motivation': "",
 				'stepbystep': "",
 				'questions': [
-				{
-					'question': "Question",
-					'id': 1,
-					'answers': [
-						"Answer 1",
-					"Answer 2",
-					"Answer 3",
-					],
-					'correct': 0
-				}
+					{
+						'question': "Question",
+						'id': 1,
+						'answers': [
+							"Answer 1",
+							"Answer 2",
+							"Answer 3",
+						],
+						'correct': 0
+					}
 				],
-					'passed': ["xE7jOejl9FI"]
+				'requiredAnswers': 1,
+				'passed': []
 			};
 
 			var modules = $scope.modules;
@@ -331,19 +348,29 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 		// Discard the changes made in the quiz or course editor
 		$scope.discardChanges = function() {
 			CourseService.query(function(data) {
-					$scope.courses = data;
-					$scope.maxCourseId();
-					if ($scope.selectedCourseId != 0) {
+				$scope.courses = data;
+				$scope.maxCourseId();
+				if ($scope.selectedCourseId != 0) {
 					$scope.modules = $scope.courses[$scope.courseIdToIndex($scope.selectedCourseId)].modules;
-					}
-					});
+				}
+			});
 		}
+
+		$scope.questionRange = [];
 
 		// Prepare the quiz editor
 		$scope.populateEditTable = function() {
 			var index = $scope.moduleIdToIndex();
 			$scope.modalVars = $scope.modules[index];
 			$scope.selectedQuestion = 0;
+			$scope.numQuestions = $scope.modalVars.questions.length;
+			$scope.questionRange = [];
+
+			for (var i = 1; i <= $scope.modalVars.questions.length; i++) {
+				$scope.questionRange.push(i);
+			}
+			console.log("NumQuestions: " + $scope.modalVars.questions.length);
+			console.log("questioRange: " + JSON.stringify($scope.questionRange));
 		}
 
 		// Add a question to a module. Called when clicking the + button
@@ -369,6 +396,13 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 
 			$scope.modalVars.questions.push(question);
+			$scope.numQuestions++;
+
+			$scope.questionRange = [];
+
+			for (var i = 1; i <= $scope.modalVars.questions.length; i++) {
+				$scope.questionRange.push(i);
+			}
 		}
 
 		// Delete a question from a module. Called when clicking the - button
@@ -384,7 +418,24 @@ controller('CoursesCtrl', ['$scope', '$http', 'UserInformationService', 'CourseS
 			}
 
 			$scope.selectedQuestion = 0;
+			$scope.numQuestions--;
 
+			$scope.questionRange = [];
+
+			for (var i = 1; i <= $scope.modalVars.questions.length; i++) {
+				$scope.questionRange.push(i);
+			}
+		}
+
+		$scope.answerNumberClicked = function(index) {
+			$scope.modalVars.requiredAnswers = index;	
+		}
+
+		$scope.printProgress = function() {
+			if ($scope.modalVars == null) {
+				return "Oh my god what is going on you should never be able to see this";
+			}
+			return ($scope.currentQuestionId+1) + "/" + $scope.modalVars.questions.length + " - " + $scope.getCurrentQuestion().question; 
 		}
 
 		// Populate list of modules with data from the server

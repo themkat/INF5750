@@ -2,7 +2,6 @@ angular.module('myApp.controllers')
 	.controller('UserInformationController', ['$scope', '$http', 'UserInformationService',
 		function($scope, $http, UserInformationService) {
 			$scope.dhisAPI = dhisAPI;
-			console.log("fadfadfasdf");
 			UserInformationService.query(function (res) {
 				$scope.userInformation = res;
 				$scope.isQuizAdmin = false;
@@ -18,7 +17,6 @@ angular.module('myApp.controllers')
 							? true : 
 						"Quiz" === group.name
 							? true : false;
-					console.log($scope.isAdmin);
 				});
 			});
 	}]);
