@@ -143,7 +143,6 @@
 				</div>
 				<div class="modal-body" id="quiz-modal">
 
-					<!-- TODO: få quiz-edit til å være oppe om man kollapser de andre. -->
 					<!-- Name -->
 					<p>
 					<div class="input-group primary">
@@ -239,7 +238,6 @@
 							</form>
 						</div>
 					</div>
-					<!-- end of copy-paste -->
 				</div>
 				<div class="modal-footer">
 					<div class="btn-group pull-right" role="group" aria-label="...">
@@ -253,7 +251,7 @@
 
 
 
-	<!-- Quiz-taker modal (ganske lik editoren, men med noen små forskjeller -->
+	<!-- Quiz-taker modal (almost the same as the editor, but with obvious differences)  -->
 	<div class="modal fade" id="quiz_taker" role="dialog" aria-hidden="true">	
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -295,7 +293,7 @@
 						</div>
 					</div>
 
-					<!-- Selve visningen av spørsmålene -->
+					<!-- The questions -->
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="panel panel-default">
@@ -317,7 +315,6 @@
 										</div>
 									</form>
 
-									<!-- En liten tekst som viser oss at vi er ferdige  -->
 									<div ng-show="modalFinished">
 										<p>{{numCorrect}} of {{numQuestions}} correct</p>
 										<p ng-show="passedQuiz()">You passed this module! Congratulations!</p>
@@ -346,4 +343,4 @@
 </div>
 
 <!-- Angular UI Accordion 
-	 .js-filen ligger i js/ mappa-->
+	 .js-file lies in the js/-folder -->
