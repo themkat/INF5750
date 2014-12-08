@@ -123,7 +123,6 @@
 					<div class="btn-group" role="group" aria-label="...">
 						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#quiz_modal" ng-click="createModule()">Create</button>
 						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#quiz_modal">Edit</button>
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#review_modal">Review</button>
 						<button class="btn btn-default" type="button" ng-click="deleteModule()">Delete</button>
 					</div>
 				</div>
@@ -340,31 +339,6 @@
 					<div class="btn-group pull-right" role="group" aria-label="...">
 						<button class="btn btn-lg btn-default" type="button" ng-click="" data-dismiss="modal">Close</button>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-<!-- Review-modal. hittil bare en visning av hvem som har bestått den valgte modalen-->
-	<div class="modal fade"	id="review_modal" role="dialog" aria-hidden="true">	
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">	
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<div class="page-header">
-						<h1>Review of {{getModuleName()}} in {{courses[courseIdToIndex()].name}}</h1>
-					</div>
-				</div>
-				<div class="modal-body">
-					<!-- Kanskje ha tabs med ulike typer data? -->
-					<h2>Passed users:</h2>
-					<div ng-repeat="user in courses[courseIdToIndex()].modules[moduleIdToIndex()].passed">
-						<p>{{user}}</p>
-						<!-- Kanskje hente ut navn isteden? -->
-					</div>
-				</div>
-				<div class="modal-footer">
-					<p>Should it be a button here?</p>
 				</div>
 			</div>
 		</div>
