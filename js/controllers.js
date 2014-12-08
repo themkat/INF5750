@@ -246,7 +246,6 @@ controller('CoursesCtrl', ['$scope', '$http', '$sce', 'UserInformationService', 
 		// hvordan skal vi lagre en id i passed? er det mulig med den næværende
 		// strukturen å bare lagre en slik verdi? eller må vi sende hele quizen?
 
-
 		// Add a new module to the list with a default name and id
 		$scope.createModule = function() {
 
@@ -306,6 +305,7 @@ controller('CoursesCtrl', ['$scope', '$http', '$sce', 'UserInformationService', 
 		$scope.moduleClicked = function(index) {
 			$scope.selectedModuleId = index;
 			$scope.populateEditTable();
+			$scope.numCorrect = 0;
 		}
 
 		$scope.modulePassed = function(module) {
@@ -370,7 +370,7 @@ controller('CoursesCtrl', ['$scope', '$http', '$sce', 'UserInformationService', 
 				$scope.questionRange.push(i);
 			}
 			console.log("NumQuestions: " + $scope.modalVars.questions.length);
-			console.log("questioRange: " + JSON.stringify($scope.questionRange));
+			console.log("questionRange: " + JSON.stringify($scope.questionRange));
 		}
 
 		// Add a question to a module. Called when clicking the + button
@@ -448,236 +448,3 @@ controller('CoursesCtrl', ['$scope', '$http', '$sce', 'UserInformationService', 
 				$scope.userId = data.id;
 				});
 		}]);
-/*
-   .controller('MyCtrl1', ['$scope', 'MeService', 'ProfileService',
-   function ($scope, MeService, ProfileService) {
-
-   $scope.dhisAPI = dhisAPI;
-
-   $scope.me = MeService.get(function () {
-   console.log('$scope.me='+JSON.stringify($scope.me));
-   });
-
-   $scope.refreshMe = function() {
-   $scope.me.$get();
-   };
-
-   $scope.profile = ProfileService.get(function () {
-   console.log('$scope.profie='+JSON.stringify($scope.profile));
-   });
-
-   $scope.saveProfile = function() {
-   $scope.profile.$save({}, function() {
-   alert("Profile saved successfully.");
-   },
-   function() {
-   alert("Profile save failed.");
-   }
-   );
-   console.log('$scope.profie='+JSON.stringify($scope.profile));
-   };
-   }])
-   .controller('MyCtrl2', ['$scope', 'UserSettingService', function ($scope, UserSettingService) {
-
-   $scope.userSetting = UserSettingService.get(function () {
-   console.log("$scope.userSetting="+JSON.stringify($scope.userSetting));
-   });
-
-   $scope.saveSetting = function () {
-   console.log('Saving setting:'+JSON.stringify($scope.userSetting));
-   $scope.userSetting.$save({}, function() {
-   alert("Data saved successfully.");
-   });
-   }
-
-   $scope.refreshSetting = function () {
-   $scope.userSettingFetched = UserSettingService.get(function () {
-   $scope.earlierSetting = $scope.userSettingFetched.value;
-   });
-   }
-
-   }])
-   .controller('MyCtrl3', ['$scope', function ($scope) {
-   console.log('Ctrl3');
-
-   $scope.location = {lat: 0.602118, lng: 30.160217};
-
-   $scope.center = {
-lat: 0.577400,
-lng: 30.201073,
-zoom: 10
-};
-
-$scope.markers = new Array();
-
-$scope.addMarkers = function () {
-console.log('Ctrl3 Add markers');
-$scope.markers.push({
-lat: $scope.location.lat,
-lng: $scope.location.lng,
-message: "My Added Marker"
-});
-
-};
-
-$scope.$on("leafletDirectiveMap.click", function (event, args) {
-		var leafEvent = args.leafletEvent;
-		console.log('Ctrl3 adding marker at lat=' + leafEvent.latlng.lat + ', lng=' + leafEvent.latlng.lng);
-		$scope.location.lng = leafEvent.latlng.lng;
-		$scope.location.lat = leafEvent.latlng.lat;
-
-		$scope.markers.push({
-lat: leafEvent.latlng.lat,
-lng: leafEvent.latlng.lng,
-message: "My Added Marker"
-});
-		});
-
-$scope.removeMarkers = function () {
-	console.log('Ctrl3 remove markers');
-	$scope.markers = new Array();
-}
-
-$scope.markers.push({
-lat: $scope.location.lat,
-lng: $scope.location.lng,
-focus: true,
-message: "A draggable marker",
-draggable: true
-});
-
-$scope.removeOsmLayer = function() {
-	delete this.layers.baselayers.osm;
-	delete this.layers.baselayers.googleTerrain;
-	delete this.layers.baselayers.googleRoadmap;
-	delete this.layers.baselayers.googleHybrid;
-	this.layers.baselayers.cycle = {
-name: 'OpenCycleMap',
-	  type: 'xyz',
-	  url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-	  layerOptions: {
-subdomains: ['a', 'b', 'c'],
-			attribution: '&copy; <a href="http://www.opencyclemap.org/copyright">OpenCycleMap</a> contributors - &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			continuousWorld: true
-	  }
-	};
-};
-
-$scope.addOsmLayer = function() {
-	delete this.layers.baselayers.cycle;
-	delete this.layers.baselayers.googleTerrain;
-	delete this.layers.baselayers.googleRoadmap;
-	delete this.layers.baselayers.googleHybrid;
-	this.layers.baselayers.osm = {
-name: 'OpenStreetMap',
-	  type: 'xyz',
-	  url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-	  layerOptions: {
-subdomains: ['a', 'b', 'c'],
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			continuousWorld: true
-	  }
-	};
-};
-
-$scope.showGoogleLayers = function() {
-	delete this.layers.baselayers.cycle;
-	delete this.layers.baselayers.osm;
-	this.layers.baselayers = {
-googleTerrain: {
-name: 'Google Terrain',
-	  layerType: 'TERRAIN',
-	  type: 'google'
-			   },
-googleHybrid: {
-name: 'Google Hybrid',
-	  layerType: 'HYBRID',
-	  type: 'google'
-			  },
-googleRoadmap: {
-name: 'Google Streets',
-	  layerType: 'ROADMAP',
-	  type: 'google'
-			   }
-	};
-};
-
-angular.extend($scope, {
-layers: {
-baselayers: {
-osm: {
-name: 'OpenStreetMap',
-type: 'xyz',
-url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-layerOptions: {
-subdomains: ['a', 'b', 'c'],
-attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-continuousWorld: true
-}
-},
-cycle: {
-name: 'OpenCycleMap',
-type: 'xyz',
-url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-layerOptions: {
-subdomains: ['a', 'b', 'c'],
-attribution: '&copy; <a href="http://www.opencyclemap.org/copyright">OpenCycleMap</a> contributors - &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-continuousWorld: true
-}
-},
-googleTerrain: {
-name: 'Google Terrain',
-	  layerType: 'TERRAIN',
-	  type: 'google'
-			   },
-googleHybrid: {
-name: 'Google Hybrid',
-	  layerType: 'HYBRID',
-	  type: 'google'
-			  },
-googleRoadmap: {
-name: 'Google Streets',
-	  layerType: 'ROADMAP',
-	  type: 'google'
-			   },
-landscape: {
-name: 'Landscape',
-	  type: 'xyz',
-	  url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-	  layerOptions: {
-subdomains: ['a', 'b', 'c'],
-			attribution: '&copy; <a href="http://www.thunderforest.com/about/">Thunderforest</a> contributors - &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			continuousWorld: true
-	  }
-		   },
-cloudmade1: {
-name: 'Cloudmade Night Commander',
-	  type: 'xyz',
-	  url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
-	  layerParams: {
-key: '007b9471b4c74da4a6ec7ff43552b16f',
-	 styleId: 999
-	  },
-layerOptions: {
-subdomains: ['a', 'b', 'c'],
-			continuousWorld: true
-			  }
-			},
-cloudmade2: {
-name: 'Cloudmade Tourist',
-	  type: 'xyz',
-	  url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
-	  layerParams: {
-key: '007b9471b4c74da4a6ec7ff43552b16f',
-	 styleId: 7
-	  },
-layerOptions: {
-subdomains: ['a', 'b', 'c'],
-			continuousWorld: true
-			  }
-			}
-}
-}
-});
-}]);
-*/

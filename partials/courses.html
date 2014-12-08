@@ -223,9 +223,15 @@
 					</div>
 				
 					Correct answers required:
+					<select
+						ng-model="modalVars.requiredAnswers"
+						ng-options="i for i in questionRange">
+					</select>
+					<!--
 					<select class="form-control input-lg" id="required_answers">
 						<option ng-repeat="n in questionRange" ng-model="modalVars.requiredAnswers" ng-click="answerNumberClicked(n)">{{n}}</option>
 					</select>
+					-->
 
 					<div class="panel panel-default">
 						<div class="panel-body" id="quiz_edit">
